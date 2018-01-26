@@ -18,9 +18,11 @@ public class Ping : MonoBehaviour {
     public Animator animator_;
     public Image pingImage_;
     public Text typeText_;
+    public Text distanceText_;
     public Text costText_;
     public Transform pingTransform;
     public Transform pingInteractTransform_;
+    public Button pingButton_;
 
     [Header("Actual variables")]
     public float size_ = 1f;
@@ -81,28 +83,28 @@ public class Ping : MonoBehaviour {
                     {
                         color = Color.white;
                         typeText_.text = "TYPE: ENERGY";
-                        costText_.text = string.Format("Distance: {0}", ((int)distance));
+                        distanceText_.text = string.Format("Distance: {0}", ((int)distance));
                         break;
                     }
                 case PING_TYPES.ARTIFACT:
                     {
                         color = Color.yellow;
                         typeText_.text = "TYPE: ARTIFACT";
-                        costText_.text = string.Format("Distance: {0}", ((int)distance));
+                        distanceText_.text = string.Format("Distance: {0}", ((int)distance));
                         break;
                     }
                 case PING_TYPES.SIGNAL:
                     {
                         color = Color.red;
                         typeText_.text = "TYPE: UNKNOWN";
-                        costText_.text = string.Format("Distance: {0}", ((int)distance));
+                        distanceText_.text = string.Format("Distance: {0}", ((int)distance));
                         break;
                     }
                 case PING_TYPES.PLAYER:
                     {
                         color = Color.blue;
                         typeText_.text = "TYPE: SELF";
-                        costText_.text = string.Format("LIFE SIGNS: STABLE");
+                        distanceText_.text = string.Format("ENERGY LEFT: {0}", WorldMapController.instance_.player.energyleft_.ToString());
                         break;
                     }
                 default:
@@ -127,9 +129,29 @@ public class Ping : MonoBehaviour {
         if (type_ != PING_TYPES.NONE)
         {
             display_ = display;
-            pingInteractTransform_.gameObject.SetActive(display);
+            LeanTween.alphaCanvas(pingInteractTransform_.GetComponent<CanvasGroup>(), display?1f:0f, .1f);
+            Cursor.visible = !display;
         };
+        // Checks distance and compares to player energy, and makes the button interactable or no based on that
+        if (WorldMapController.instance_.player.EnergyCost(transform.position) < distance)
+        {
+            pingButton_.interactable = true;
+        }
+        else
+        {
+            pingButton_.interactable = false;
+        }
+        costText_.text = WorldMapController.instance_.player.EnergyCost(transform.position).ToString();
 
+    }
+
+    public void ClickedPing()
+    {
+        // Tell the player to start moving
+        if (pingButton_.interactable)
+        {
+
+        }
     }
 
     void Update()

@@ -277,6 +277,25 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1465373575086498, guid: 69a1438a7b7372a4abfa1deeb5760e51, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224004826564132636, guid: 69a1438a7b7372a4abfa1deeb5760e51,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -13.555
+      objectReference: {fileID: 0}
+    - target: {fileID: 224962608057148948, guid: 69a1438a7b7372a4abfa1deeb5760e51,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -12.735
+      objectReference: {fileID: 0}
+    - target: {fileID: 225650658031236346, guid: 69a1438a7b7372a4abfa1deeb5760e51,
+        type: 2}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 69a1438a7b7372a4abfa1deeb5760e51, type: 2}
   m_IsPrefabParent: 0
@@ -488,6 +507,46 @@ Prefab:
       propertyPath: type_
       value: 4000
       objectReference: {fileID: 0}
+    - target: {fileID: 224004826564132636, guid: 69a1438a7b7372a4abfa1deeb5760e51,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224004826564132636, guid: 69a1438a7b7372a4abfa1deeb5760e51,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224004826564132636, guid: 69a1438a7b7372a4abfa1deeb5760e51,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 18.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 224004826564132636, guid: 69a1438a7b7372a4abfa1deeb5760e51,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224962608057148948, guid: 69a1438a7b7372a4abfa1deeb5760e51,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224962608057148948, guid: 69a1438a7b7372a4abfa1deeb5760e51,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224962608057148948, guid: 69a1438a7b7372a4abfa1deeb5760e51,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 50.930004
+      objectReference: {fileID: 0}
+    - target: {fileID: 224962608057148948, guid: 69a1438a7b7372a4abfa1deeb5760e51,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 69a1438a7b7372a4abfa1deeb5760e51, type: 2}
   m_IsPrefabParent: 0
@@ -501,7 +560,7 @@ GameObject:
   - component: {fileID: 1868112373}
   - component: {fileID: 1868112374}
   m_Layer: 5
-  m_Name: player
+  m_Name: PlayerWorldMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -537,6 +596,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eabfe08b600a0e74e8a16bdd9d4c054c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  energyleft_: 200
+  speed_: 1.5
+  travelTarget_: {x: 0, y: 0}
 --- !u!1 &1988322192
 GameObject:
   m_ObjectHideFlags: 0

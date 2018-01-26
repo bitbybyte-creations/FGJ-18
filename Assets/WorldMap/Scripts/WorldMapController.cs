@@ -32,4 +32,10 @@ public class WorldMapController : Object {
         }
     }
 
+    void Start()
+    {
+
+
+    }
+
 }
