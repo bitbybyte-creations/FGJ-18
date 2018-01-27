@@ -86,19 +86,21 @@ public class MovingEntity : MonoBehaviour {
         Vector2 d = Vector2.zero;
         float absX = Mathf.Abs(direction.x);
         float absY = Mathf.Abs(direction.y);
-        
-        if (absX > absY)
+        float rand = Random.value;
+
+        if (absX > absY || (absX == absY && rand < 0.5f))
         {
             d = new Vector2(Mathf.Sign(direction.x),0f);
         }
-        else if (absX < absY)
+        else
         {
             d = new Vector2(0f, Mathf.Sign(direction.y));
-        }
-        
+        }        
+
+
         Debug.Log("Move Direction: " + d);
 
-        MoveGoal += d;        
+        MoveGoal += d;
         m_syncActor.AssignAction(new SyncMoveAction(transform, MoveGoal));
     }
 }

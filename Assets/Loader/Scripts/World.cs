@@ -12,16 +12,19 @@ public class World
 
     }
 
-    private World(Map map)
-    {
-        _grid = new Grid(map);
-    }
-
     public static World GetInstance()
     {
         if (_world == null)
             _world = new World();
         return _world;
+    }
+
+    public static World Instance
+    {
+        get
+        {
+            return GetInstance();
+        }
     }
 
     public void InitTestMap()
@@ -32,6 +35,13 @@ public class World
         _grid = new Grid(map);
         _world = this;
     }
+
+    public World Init(Map map)
+    {
+        _grid = new Grid(map);
+        return this;
+    }
+
 
     public void Draw()
     {

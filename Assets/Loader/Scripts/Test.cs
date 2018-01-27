@@ -18,8 +18,8 @@ public class Test : MonoBehaviour {
 
         //GameObject floor = Instantiate(Resources.Load("Prefabs/Tilesets/Concrete/Floor") as GameObject);
 
-        World w = new World();
-        w.Draw();
+        //World w = new World();
+        //w.Draw();
     }
 	
 	// Update is called once per frame
