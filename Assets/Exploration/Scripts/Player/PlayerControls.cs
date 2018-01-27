@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControls : MonoBehaviour {
+public class PlayerControls : MonoBehaviour
+{
 
     private MovingEntity m_movingEntity;
+    private AttackingEntity m_attackingEntity;
     private SynchronizedActor m_actor;
     private bool m_myTurn;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         m_movingEntity = GetComponent<MovingEntity>();
+        m_attackingEntity = GetComponent<AttackingEntity>();
         m_actor = GetComponent<SynchronizedActor>();
         m_actor.OnTurnStatusChange += actor_OnTurnStatusChange;
-	}
+    }
 
     private void actor_OnTurnStatusChange(bool hasTurn)
     {
@@ -27,7 +31,8 @@ public class PlayerControls : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
         if (m_myTurn)
         {
             Vector2 move = Vector2.zero;
@@ -56,18 +61,15 @@ public class PlayerControls : MonoBehaviour {
                         Debug.Log("Tile blocked!");
                         break;
                     case MovingEntity.MoveResult.ResultValue.TileOccupied:
-                        Debug.Log("Tile Occupied! Maybe attack?! ");
-                        Entity entity = result.Cell.GetEntity();
-                        if (entity.GetType() == typeof(Monster))
-                        {
-                            Debug.Log(name+" Attacking "+ entity.Actor.name);
-                        }
+                        AttackingEntity.AttackResult res = CombatSolver.Fight(m_actor, result.Cell.GetEntity().Actor);
+                        Synchronizer.Continue(m_actor, res.Weapon.TimeCost);
                         break;
                 }
 
-                
+
             }
-            
+
         }
-	}
+    }
 }
+

@@ -21,11 +21,16 @@ public class LevelBuilder : MonoBehaviour {
 
     public int EnemyMinDistance = 10;
 
-    public LevelType LevelType = LevelType.None;
-    public LevelPoint StartPoint;
+    public int MinObjectiveDistance = 20;
 
+    public LevelType LevelType = LevelType.None;
     public LevelBuildMode BuildMode = LevelBuildMode.FollowAndContinue;
 
+    public LevelPoint StartPoint;
+    public LevelPoint ObjectivePoint;
+
+
+    
     private const int UP_LEFT = 0;
     private const int UP_RIGTH = 1;
     private const int DOWN_LEFT = 2;
@@ -184,6 +189,10 @@ public class LevelBuilder : MonoBehaviour {
             {
                 start = lastPath[Random.Range(0, lastPath.Length)];
             }
+            else if(BuildMode == LevelBuildMode.RandomContinue)
+            {
+                start = FloorPoints[Random.Range(0, FloorPoints.Count)];
+            }
             else
             {
                 start.X = LevelWidth / 2;
@@ -251,6 +260,22 @@ public class LevelBuilder : MonoBehaviour {
     }
 
 
+    private void generateObjectivePoint()
+    {
+
+
+        while (true)
+        {
+            ObjectivePoint = FloorPoints[Random.Range(0, FloorPoints.Count)];
+
+            if (Mathf.Abs(ObjectivePoint.X - StartPoint.X) + Mathf.Abs(ObjectivePoint.Y - StartPoint.Y) > MinObjectiveDistance)
+            {
+                break;
+            }
+        }
+
+    }
+
     public void Generate()
     {
         char[,] worldData = new char[LevelWidth,LevelHeigth];
@@ -266,6 +291,7 @@ public class LevelBuilder : MonoBehaviour {
         if (LevelType != LevelType.Ambush)
         {
             StartPoint = FourCorners[Random.Range(0, 4)];
+            generateObjectivePoint();
         }
 
         EnemySpawnPoints = new LevelPoint[Random.Range(MinEnemySpawnCount, MaxEnemySpawnCount)];
@@ -306,6 +332,13 @@ public class LevelBuilder : MonoBehaviour {
             }
         }
 
+        if (LevelType != LevelType.Ambush)
+        {
+            foreach (World.Tile tile in m_world.GetGrid().GetCell(ObjectivePoint.X, ObjectivePoint.Y).GetTiles())
+            {
+                tile.GetGO().GetComponent<MeshRenderer>().material.color = new Color(1f, 0.3f, 0.5f);
+            }
+        }
 
     }
 

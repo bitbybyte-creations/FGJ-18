@@ -10,6 +10,7 @@ public enum LevelBuildMode
     FollowAndContinue,
     //Will make one huge area level. possibly some branches or idk?!
     StartOver,
+    RandomContinue,
 
 }
 

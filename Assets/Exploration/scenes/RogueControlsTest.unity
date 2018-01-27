@@ -154,7 +154,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -163,7 +163,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 50
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -187,13 +187,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 20848984}
-  m_LocalRotation: {x: 0.3037005, y: 0, z: 0, w: 0.9527676}
+  m_LocalRotation: {x: 0.53729963, y: 0, z: 0, w: 0.8433915}
   m_LocalPosition: {x: 0, y: 12.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1344011890}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 35.36, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 65, y: 0, z: 0}
 --- !u!1 &376731429
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,6 +204,8 @@ GameObject:
   - component: {fileID: 376731431}
   - component: {fileID: 376731432}
   - component: {fileID: 376731430}
+  - component: {fileID: 376731434}
+  - component: {fileID: 376731433}
   m_Layer: 0
   m_Name: Spawn
   m_TagString: Untagged
@@ -222,11 +224,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee947ed832393424ebf88a98fcea4cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1696795042462732, guid: c1f5cb8bbb5fe294ab4234d1f8bf6c5f, type: 2}
+  prefab: {fileID: 1822390675987390, guid: 941a5ee9cfef6dc4baa2c170e6c97659, type: 2}
   xPosition: 0
   yPosition: 0
   heightOffset: 0
-  spawnCount: 1
+  spawnCount: 5
   maxXPosition: 63
   maxYPosition: 63
 --- !u!4 &376731431
@@ -253,11 +255,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee947ed832393424ebf88a98fcea4cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1984132612513966, guid: e0725933425ccf347a37a1bb9356e42e, type: 2}
+  prefab: {fileID: 1899862524669692, guid: d289033b0e8f1a54db78040c166f7b2e, type: 2}
   xPosition: 0
   yPosition: 0
   heightOffset: 0
-  spawnCount: 10
+  spawnCount: 5
+  maxXPosition: 63
+  maxYPosition: 63
+--- !u!114 &376731433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 376731429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee947ed832393424ebf88a98fcea4cb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1599237235754108, guid: d4291a80d58bada4db4d1effdd8a2d00, type: 2}
+  xPosition: 0
+  yPosition: 0
+  heightOffset: 0
+  spawnCount: 1
+  maxXPosition: 63
+  maxYPosition: 63
+--- !u!114 &376731434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 376731429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee947ed832393424ebf88a98fcea4cb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1772536582349242, guid: 3c70f2982b3f0614796ffef7d0ff1df7, type: 2}
+  xPosition: 0
+  yPosition: 0
+  heightOffset: 0
+  spawnCount: 5
   maxXPosition: 63
   maxYPosition: 63
 --- !u!1 &1344011889
@@ -303,6 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+  distanceMultiplier: 1
 --- !u!114 &1344011892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,7 +354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  offset: {x: 0, y: 0, z: -16}
+  offset: {x: 0, y: 0, z: -6}
 --- !u!1 &1549744443
 GameObject:
   m_ObjectHideFlags: 0

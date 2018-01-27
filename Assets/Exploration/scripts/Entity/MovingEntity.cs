@@ -66,7 +66,11 @@ public class MovingEntity : MonoBehaviour {
         {
             Debug.Log("Execute Move Action for " + m_mover.name);
             Vector3 realPosition = new Vector3(m_goal.x + xz_offset, m_mover.position.y, m_goal.y + xz_offset);
+            Vector3 dir = realPosition - m_mover.position;
+            Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
+            LeanTween.rotate(m_mover.gameObject, rot.eulerAngles, 0.10f);
             LeanTween.move(m_mover.gameObject, realPosition, 0.25f);
+            
         }
     }
 
