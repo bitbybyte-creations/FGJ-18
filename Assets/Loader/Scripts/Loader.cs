@@ -23,6 +23,7 @@ public class Loader {
         //    { '_','9','#','7','_' },
         //    { '_','_','_','_','_' }
         //};
+        
         return new Map(tiles);
     }
     public static Map LoadFloorTileMap(int size)
