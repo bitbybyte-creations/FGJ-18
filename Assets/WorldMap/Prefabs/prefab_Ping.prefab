@@ -161,7 +161,6 @@ GameObject:
   - component: {fileID: 95251427921162394}
   - component: {fileID: 114619439921763132}
   - component: {fileID: 114746526180538270}
-  - component: {fileID: 222398394981766030}
   m_Layer: 5
   m_Name: prefab_Ping
   m_TagString: Untagged
@@ -425,12 +424,13 @@ MonoBehaviour:
   typeText_: {fileID: 114670145292466560}
   distanceText_: {fileID: 114545047366380462}
   costText_: {fileID: 114531557768771364}
-  pingTransform: {fileID: 224528656024773564}
+  pingRectTransform_: {fileID: 224528656024773564}
   pingInteractTransform_: {fileID: 224048128866760982}
   pingButton_: {fileID: 114051603074176052}
-  size_: 1
+  size_: 100
   color_: {r: 1, g: 1, b: 1, a: 1}
   type_: 1000
+  encounter_: {fileID: 11400000, guid: 7982a02b02ca3df44bd2d56a872f28f2, type: 2}
 --- !u!114 &114670145292466560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -618,7 +618,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -670,12 +670,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1079561046676706}
---- !u!222 &222398394981766030
-CanvasRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1743111402306462}
 --- !u!222 &222616392192596908
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -871,10 +865,10 @@ RectTransform:
   m_Father: {fileID: 224528656024773564}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -0.000030518, y: -0.000030518}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224528656024773564
 RectTransform:
@@ -913,7 +907,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 429, y: 358}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224962608057148948

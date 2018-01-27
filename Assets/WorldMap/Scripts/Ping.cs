@@ -21,7 +21,7 @@ public class Ping : MonoBehaviour {
     public Text typeText_;
     public Text distanceText_;
     public Text costText_;
-    public Transform pingTransform;
+    public RectTransform pingRectTransform_;
     public Transform pingInteractTransform_;
     public Button pingButton_;
 
@@ -30,8 +30,14 @@ public class Ping : MonoBehaviour {
     public Color color_ = Color.white;
     public PING_TYPES type_ = PING_TYPES.ENERGY;
 
+    [Header("Data containers")]
+    public WorldMapEncounter encounter_;
+
     private bool display_ = false;
     private PlayerWorldMap player_;
+    private float encounterDistance_ = 10f;
+    private bool playerIn_ = false;
+    private Color colorOriginal_;
 
 	// Use this for initialization
 	void Start () {
@@ -39,18 +45,20 @@ public class Ping : MonoBehaviour {
         size = size_;
         type = type_;
         
+        encounterDistance_ = pingRectTransform_.Find("eventSystemImage").GetComponent<RectTransform>().rect.width;
+        Debug.Log("Size: " + encounterDistance_.ToString());
+        colorOriginal_ = color;
+        
     }
 
     public Color color
     {
         get
         {
-
             return color_;
         }
         set
         {
-
             color_ = value;
             pingImage_.color = value;
         }
@@ -64,7 +72,8 @@ public class Ping : MonoBehaviour {
         }
         set
         {
-            pingTransform.localScale = new Vector3(value, value);
+            pingRectTransform_.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size);
+            pingRectTransform_.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size);
             size_ = value;
         }
     }
@@ -185,6 +194,18 @@ public class Ping : MonoBehaviour {
         {
             pingInteractTransform_.position = Input.mousePosition;
             UpdateTypeTexts(type_);
+        };
+
+        if (type_ != PING_TYPES.PLAYER) {
+            if (distance < encounterDistance_ && !playerIn_) {
+                playerIn_ = true;
+                WorldMapController.instance_.ZoomIntoPing(this);
+                //Debug.Log("Player entered!");
+            }
+            else if (distance>encounterDistance_ && playerIn_) {
+                playerIn_ = false;
+                WorldMapController.instance_.ZoomOutOfPing();
+            };
         };
     }
 
