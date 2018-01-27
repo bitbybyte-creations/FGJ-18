@@ -274,6 +274,13 @@ public class World
                                 '#'.Equals(map.GetTile(x, y - 1)))
                                 c.AddTile(Tile.Set.CORNER_SHARP, x, y, 90);
 
+                            //pillar
+                            //if ('_'.Equals(map.GetTile(x + 1, y)) &&
+                            //    '_'.Equals(map.GetTile(x - 1, y)) &&
+                            //    '_'.Equals(map.GetTile(x, y + 1)) &&
+                            //    '_'.Equals(map.GetTile(x, y - 1)))
+                            //    c.AddTile(Tile.Set.PILLAR, x, y, 0);
+
                             break;
                         case '_':
                             c.AddTile(Tile.Set.FLOOR, x, y, 0);
