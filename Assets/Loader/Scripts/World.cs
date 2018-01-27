@@ -77,22 +77,22 @@ public class World
                     switch (map.GetTile(x, y))
                     {
                         case '#':
-                            c.SetTile(Tile.Set.FLOOR, x, y, 0);
+                            c.SetTile(Tile.Set.WALL, x, y, 0);
                             break;
                         case '_':
                             c.SetTile(Tile.Set.FLOOR, x, y, 0);
                             break;
                         case '/':
-                            c.SetTile(Tile.Set.FLOOR, x, y, 0);
+                            c.SetTile(Tile.Set.CORNER, x, y, 270);
                             break;
                         case '\\':
-                            c.SetTile(Tile.Set.FLOOR, x, y, 90);
+                            c.SetTile(Tile.Set.CORNER, x, y, 0);
                             break;
                         case '%':
-                            c.SetTile(Tile.Set.FLOOR, x, y, 180);
+                            c.SetTile(Tile.Set.CORNER, x, y, 90);
                             break;
                         case 'c':
-                            c.SetTile(Tile.Set.FLOOR, x, y, 270);
+                            c.SetTile(Tile.Set.CORNER, x, y, 180);
                             break;
                     }
                     _grid[x, y] = c;
@@ -127,18 +127,18 @@ public class World
         {
             public static readonly string BASE = "Prefabs/Tilesets/";
             private static readonly string _default = "Concrete/";
-            protected static string _set = BASE + _default;
+            protected static string GetSet() { return BASE + _default; }
 
 
-            public static readonly string FLOOR = _set + "Floor";
-            public static readonly string WALL = _set + "Wall";
-            public static readonly string CORNER = _set + "Corner";
+            public static string FLOOR { get { return GetSet() + "Floor"; } }
+            public static string WALL = GetSet() + "Wall";
+            public static string CORNER = GetSet() + "Corner";
 
         }
 
         //public class Concrete : Set
         //{
-        //    protected static new string _set = BASE + "Concrete/";
+        //    protected static string GetSet() { return BASE + "Concrete/"; }
         //}
 
 
