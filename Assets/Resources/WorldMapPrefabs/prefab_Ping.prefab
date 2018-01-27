@@ -70,6 +70,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224528656024773564}
+  - component: {fileID: 65513607461475550}
   m_Layer: 5
   m_Name: pingTransform
   m_TagString: Untagged
@@ -203,6 +204,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!65 &65513607461475550
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1185553470856686}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 100, y: 100, z: 100}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &95251427921162394
 Animator:
   serializedVersion: 3
@@ -427,9 +440,8 @@ MonoBehaviour:
   pingRectTransform_: {fileID: 224528656024773564}
   pingInteractTransform_: {fileID: 224048128866760982}
   pingButton_: {fileID: 114051603074176052}
-  size_: 100
-  color_: {r: 1, g: 1, b: 1, a: 1}
-  type_: 1000
+  type_: 5000
+  state_: 1000
   encounter_: {fileID: 11400000, guid: 7982a02b02ca3df44bd2d56a872f28f2, type: 2}
 --- !u!114 &114670145292466560
 MonoBehaviour:
@@ -860,7 +872,7 @@ RectTransform:
   m_GameObject: {fileID: 1813258989344502}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 224528656024773564}
   m_RootOrder: 0

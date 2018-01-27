@@ -51,5 +51,9 @@ public class TypeWriter : MonoBehaviour {
         self_.text = textToWrite_;
         WorldMapController.instance_.ShowEncounterButton();
     }
+    public void ClearWriter() {
+        self_.text = "";
+        WorldMapController.instance_.ShowEncounterButton(false);
+    }
 
 }
