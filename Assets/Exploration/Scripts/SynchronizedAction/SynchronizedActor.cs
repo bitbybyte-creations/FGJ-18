@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BitByByte.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -126,11 +127,27 @@ public class SynchronizedActor : MonoBehaviour {
     internal void Moan(int dmg)
     {
         Debug.Log("I got damage: " + dmg);
-        if (Stats.Health <= 0)
+        printDamage(dmg);
+        bool dead = Stats.Health <= 0;
+        if (dead)
         {
-            Debug.Log(Stats.Name + " died...");
+            Debug.Log(Stats.Name + " died...");            
+            Synchronizer.KillEntity(this);
         }
+
         //todo print damage text;
+    }
+
+    private void printDamage(int dmg)
+    {
+        Transform canvas = GameObject.Find("_canvas").transform;
+        BitByByte.UI.FloatingTextBuilder<FloatingText> text = new FloatingTextBuilder<FloatingText>(transform, canvas);
+        text.Text = dmg.ToString();
+        text.Color = Color.red;
+        text.FontSize = 40;
+        text.Velocity = new Vector3(0f, 30f, 0f);
+        text.Build();
+
     }
 
     public void EndTurn()

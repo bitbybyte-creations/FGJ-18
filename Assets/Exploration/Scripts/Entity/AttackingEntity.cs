@@ -14,7 +14,7 @@ public class WeaponList
 
     static WeaponList()
     {
-        Fist = new Weapon("Fist", 1, 6, 0.25f, 1, 0, 6);
+        Fist = new Weapon("Fist", 10, 20, 0.9f, 1, 0, 6);
         Blaster = new Weapon("Blaster", 5, 20, 0.45f, 7, 5, 10);
         MutantFist = new Weapon("MutantFist", 1, 3, 0.25f, 1, 0, 8);
         MutantClaw = new Weapon("MutantClaw", 3, 12, 0.25f, 1, 0, 5);

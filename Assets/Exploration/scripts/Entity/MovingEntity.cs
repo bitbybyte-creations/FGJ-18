@@ -51,13 +51,15 @@ public class MovingEntity : MonoBehaviour {
     public int moveActionCost = 10;
     //private Vector2 m_moveGoal;
     private SynchronizedActor m_syncActor;
+    private Vector3 m_lastPositionUpdate;
+    private Quaternion m_lastRotationUpdate;
 
     public class SyncMoveAction : SynchronizedActor.SyncAction
     {
         private Vector2 m_goal;
-        private Transform m_mover;
+        private MovingEntity m_mover;
 
-        public SyncMoveAction(Transform mover, Vector2 moveGoal)
+        public SyncMoveAction(MovingEntity mover, Vector2 moveGoal)
         {
             m_goal = moveGoal;
             m_mover = mover;
@@ -65,13 +67,24 @@ public class MovingEntity : MonoBehaviour {
         public override void Execute()
         {
             //Debug.Log("Execute Move Action for " + m_mover.name);
-            Vector3 realPosition = new Vector3(m_goal.x + xz_offset, m_mover.position.y, m_goal.y + xz_offset);
-            Vector3 dir = realPosition - m_mover.position;
+            Vector3 realPosition = new Vector3(m_goal.x + xz_offset, m_mover.transform.position.y, m_goal.y + xz_offset);
+            Vector3 dir = realPosition - m_mover.transform.position;
             Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
-            LeanTween.rotate(m_mover.gameObject, rot.eulerAngles, 0.10f);
-            LeanTween.move(m_mover.gameObject, realPosition, 0.25f);
+            //LeanTween.rotate(m_mover.gameObject, rot.eulerAngles, 0.10f);
+            m_mover.UpdatePosition(realPosition);
+            m_mover.UpdateRotation(rot);
+            //LeanTween.move(m_mover.gameObject, realPosition, 0.25f);
             
         }
+    }
+
+    private void UpdatePosition(Vector3 pos)
+    {
+        m_lastPositionUpdate = pos;
+    }
+    private void UpdateRotation(Quaternion rot)
+    {
+        m_lastRotationUpdate = rot;
     }
 
     //position in 2d map. in drawable world x = x but map y =z;
@@ -100,7 +113,8 @@ public class MovingEntity : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        
+        m_lastRotationUpdate = transform.rotation;
+        m_lastPositionUpdate = transform.position;
         m_syncActor = GetComponent<SynchronizedActor>();
         if (m_syncActor == null)
             m_syncActor = gameObject.AddComponent<SynchronizedActor>();
@@ -114,6 +128,15 @@ public class MovingEntity : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Debug.DrawLine(transform.position, new Vector3(MoveGoal.x+xz_offset, 0f, MoveGoal.y+xz_offset), Color.blue);
+        Vector3 deltaPos = m_lastPositionUpdate - transform.position;
+        float maxSpeed = Time.deltaTime * 2;
+        Vector3 translate = deltaPos * Time.deltaTime * 2;
+        if (deltaPos.magnitude <= maxSpeed)
+            translate = deltaPos;
+
+        transform.position = transform.position + translate;
+        //transform.position = m_lastPositionUpdate;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, m_lastRotationUpdate, 720 * Time.deltaTime);
     }
 
     /// <summary>
@@ -165,7 +188,7 @@ public class MovingEntity : MonoBehaviour {
             //Debug.Log("Move OK");
             result = new MoveResult(MoveResult.ResultValue.Ok, cell, x, y);
             MoveGoal = targetPosition;
-            m_syncActor.AssignAction(new SyncMoveAction(transform, MoveGoal));
+            m_syncActor.AssignAction(new SyncMoveAction(this, targetPosition));
         }
         return result;
         

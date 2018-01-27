@@ -8,12 +8,12 @@ public class LevelBuilder : MonoBehaviour {
     // Use this for initialization
 
     public int LevelWidth = 100;
-    public int LevelHeigth = 80;
-    public int MaxPathLen = 30;
-    public int MinPathLen = 2;
+    public int LevelHeigth = 100;
+    public int MaxPathLen = 50;
+    public int MinPathLen = 20;
 
-    public int MaxPaths = 10;
-    public int MinPaths = 5;
+    public int MaxPaths = 40;
+    public int MinPaths = 20;
 
 
     public int MaxEnemySpawnCount = 50;
@@ -27,6 +27,7 @@ public class LevelBuilder : MonoBehaviour {
     public LevelBuildMode BuildMode = LevelBuildMode.FollowAndContinue;
 
     public LevelPoint StartPoint;
+    public LevelPoint EndPoint;
     public LevelPoint ObjectivePoint;
 
 
@@ -286,6 +287,22 @@ public class LevelBuilder : MonoBehaviour {
 
     }
 
+    private void generateEndPoint()
+    {
+
+        while (true)
+        {
+            EndPoint = FourCorners[Random.Range(0, 4)];
+
+            if (!EndPoint.Equals(StartPoint))
+            {
+                break;
+            }
+
+        }
+
+    }
+
     public void Generate()
     {
         char[,] worldData = new char[LevelWidth,LevelHeigth];
@@ -302,6 +319,7 @@ public class LevelBuilder : MonoBehaviour {
         {
             StartPoint = FourCorners[Random.Range(0, 4)];
             generateObjectivePoint();
+            generateEndPoint();
         }
 
         EnemySpawnPoints = new LevelPoint[Random.Range(MinEnemySpawnCount, MaxEnemySpawnCount)];
@@ -347,6 +365,11 @@ public class LevelBuilder : MonoBehaviour {
             foreach (World.Tile tile in m_world.GetGrid().GetCell(ObjectivePoint.X, ObjectivePoint.Y).GetTiles())
             {
                 tile.GetGO().GetComponent<MeshRenderer>().material.color = new Color(0.2f, 0.4f, 0.1f);
+            }
+
+            foreach (World.Tile tile in m_world.GetGrid().GetCell(EndPoint.X, EndPoint.Y).GetTiles())
+            {
+                tile.GetGO().GetComponent<MeshRenderer>().material.color = new Color(1f, 0.5f, 0f);
             }
         }
 

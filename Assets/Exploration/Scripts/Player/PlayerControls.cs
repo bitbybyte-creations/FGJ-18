@@ -50,7 +50,7 @@ public class PlayerControls : MonoBehaviour
 
             if (move != Vector2.zero)
             {
-                Debug.Log("Move: " + move);
+                //Debug.Log("Move: " + move);
                 MovingEntity.MoveResult result = m_movingEntity.Move(move);
                 switch (result.Result)
                 {
@@ -58,7 +58,7 @@ public class PlayerControls : MonoBehaviour
                         Synchronizer.Continue(m_actor, m_movingEntity.moveActionCost);
                         break;
                     case MovingEntity.MoveResult.ResultValue.TileBlocked:
-                        Debug.Log("Tile blocked!");
+                        //Debug.Log("Tile blocked!");
                         break;
                     case MovingEntity.MoveResult.ResultValue.TileOccupied:
                         AttackingEntity.AttackResult res = CombatSolver.Fight(m_actor, result.Cell.GetEntity().Actor);
