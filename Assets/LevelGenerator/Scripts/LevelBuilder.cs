@@ -8,12 +8,12 @@ public class LevelBuilder : MonoBehaviour {
     // Use this for initialization
 
     public int LevelWidth = 100;
-    public int LevelHeigth = 80;
-    public int MaxPathLen = 30;
-    public int MinPathLen = 2;
+    public int LevelHeigth = 100;
+    public int MaxPathLen = 50;
+    public int MinPathLen = 20;
 
-    public int MaxPaths = 10;
-    public int MinPaths = 5;
+    public int MaxPaths = 40;
+    public int MinPaths = 20;
 
 
     public int MaxEnemySpawnCount = 50;
