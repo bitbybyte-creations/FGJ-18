@@ -19,20 +19,43 @@ public class World
     {
         foreach(Cell c in _grid.GetCells())
         {
-            c.GetTile().Draw();
+            c.DrawTiles();
         }
     }
 
     public class Cell
     {
+        public static readonly Cell NULL = new Cell();
+
         private List<Item> _items;
         private IEntity _entity;
-        private Tile _tile;
+        private List<Tile> _tiles;
+        private bool _blocked;
         //graphic objects?
 
         public Cell()
         {
             _items = new List<Item>();
+            _tiles = new List<Tile>();
+            _blocked = true;
+        }
+
+        public void DrawTiles()
+        {
+            foreach(Tile t in _tiles)
+            {
+                t.Draw();
+            }
+        }
+
+        public bool IsBlocked()
+        {
+            return _blocked;
+        }
+
+        public void SetBlocked(bool blocked)
+        {
+            _blocked = blocked;
         }
 
         public List<Item> GetItems()
@@ -50,14 +73,9 @@ public class World
             return _entity;
         }
 
-        public Tile GetTile()
+        public void AddTile(string type, int x, int y, int rot)
         {
-            return _tile;
-        }
-
-        public void SetTile(string type, int x, int y, int rot)
-        {
-            _tile = new Tile(type, new Vector3(x, 0, y), new Vector3(0, rot, 0));
+            _tiles.Add(new Tile(type, new Vector3(x, 0, y), new Vector3(0, rot, 0)));
         }
     }
 
@@ -77,22 +95,31 @@ public class World
                     switch (map.GetTile(x, y))
                     {
                         case '#':
-                            c.SetTile(Tile.Set.WALL, x, y, 0);
+
+                            if ('_'.Equals(map.GetTile(x - 1, y)))
+                                c.AddTile(Tile.Set.WALL, x, y, 0);
+                            if ('_'.Equals(map.GetTile(x - 1, y)))
+                                c.AddTile(Tile.Set.WALL, x, y - 1, 0);
+                            if ('_'.Equals(map.GetTile(x - 1, y)))
+                                c.AddTile(Tile.Set.WALL, x + 1, y, 0);
+                            if ('_'.Equals(map.GetTile(x - 1, y + 1)))
+                                c.AddTile(Tile.Set.WALL, x, y, 0);
                             break;
                         case '_':
-                            c.SetTile(Tile.Set.FLOOR, x, y, 0);
+                            c.AddTile(Tile.Set.FLOOR, x, y, 0);
+                            c.SetBlocked(false);
                             break;
-                        case '/':
-                            c.SetTile(Tile.Set.CORNER, x, y, 270);
+                        case '7':
+                            c.AddTile(Tile.Set.CORNER, x, y, 270);
                             break;
-                        case '\\':
-                            c.SetTile(Tile.Set.CORNER, x, y, 0);
+                        case '9':
+                            c.AddTile(Tile.Set.CORNER, x, y, 0);
                             break;
-                        case '%':
-                            c.SetTile(Tile.Set.CORNER, x, y, 90);
+                        case '3':
+                            c.AddTile(Tile.Set.CORNER, x, y, 90);
                             break;
-                        case 'c':
-                            c.SetTile(Tile.Set.CORNER, x, y, 180);
+                        case '1':
+                            c.AddTile(Tile.Set.CORNER, x, y, 180);
                             break;
                     }
                     _grid[x, y] = c;
@@ -108,7 +135,7 @@ public class World
         public Cell GetCell(int x, int y)
         {
             if (x < 0 || y < 0 || x > _grid.GetLength(0) || y > _grid.GetLength(1))
-                return null;
+                return Cell.NULL;
             return _grid[x, y];
         }
     }
