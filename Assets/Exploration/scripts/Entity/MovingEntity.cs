@@ -64,7 +64,7 @@ public class MovingEntity : MonoBehaviour {
         }
         public override void Execute()
         {
-            Debug.Log("Execute Move Action for " + m_mover.name);
+            //Debug.Log("Execute Move Action for " + m_mover.name);
             Vector3 realPosition = new Vector3(m_goal.x + xz_offset, m_mover.position.y, m_goal.y + xz_offset);
             Vector3 dir = realPosition - m_mover.position;
             Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
@@ -125,8 +125,8 @@ public class MovingEntity : MonoBehaviour {
         //float move = m_remainingMove + moveSpeed;
         //m_remainingMove = move - (Mathf.Abs(move));
 
-        Debug.Log("Position on Map: " + MapPosition +", Position on World: "+transform.position);
-        Debug.Log("Move Input Direction: " + direction);
+        //Debug.Log("Position on Map: " + MapPosition +", Position on World: "+transform.position);
+        //Debug.Log("Move Input Direction: " + direction);
 
         float absX = Mathf.Abs(direction.x);
         float absY = Mathf.Abs(direction.y);
@@ -149,20 +149,20 @@ public class MovingEntity : MonoBehaviour {
         x = (int)targetPosition.x;
         y = (int)targetPosition.y;
         World.Cell cell = World.Instance.GetGrid().GetCell(x,y);
-        Debug.Log("Cell at " + targetPosition+":  " + cell.ToString());
+        //Debug.Log("Cell at " + targetPosition+":  " + cell.ToString());
         if (cell.IsBlocked)
         {
-            Debug.Log("Cell Blocked");
+            //Debug.Log("Cell Blocked");
             result = new MoveResult(MoveResult.ResultValue.TileBlocked, cell, x, y);
         }
         else if (cell.ContainsEntity)
         {
-            Debug.Log("Cell Occupied");
+            //Debug.Log("Cell Occupied");
             result = new MoveResult(MoveResult.ResultValue.TileOccupied, cell, x, y);
         }
         else
         {
-            Debug.Log("Move OK");
+            //Debug.Log("Move OK");
             result = new MoveResult(MoveResult.ResultValue.Ok, cell, x, y);
             MoveGoal = targetPosition;
             m_syncActor.AssignAction(new SyncMoveAction(transform, MoveGoal));

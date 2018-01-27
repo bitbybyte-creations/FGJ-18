@@ -67,7 +67,7 @@ public class Synchronizer
         
         actor.ActionTime += (ulong)actionCost;
         actor.EndTurn();
-        Debug.Log(actor.name + " Action Complete, Next Action Time: "+actor.ActionTime);
+        //Debug.Log(actor.name + " Action Complete, Next Action Time: "+actor.ActionTime);
         SynchronizedActor next = Instance.GetNextActorTurn();
         int count = 100;
         while (next == null && count > 0)
@@ -80,7 +80,7 @@ public class Synchronizer
             Debug.LogError("Continue Loop Timeout!");
         else
         {
-            Debug.Log("Giving Turn to " + next.name);
+            //Debug.Log("Giving Turn to " + next.name);
             next.GiveTurn();
         }
 
@@ -98,7 +98,7 @@ public class Synchronizer
             }
         }
         m_time++;
-        Debug.Log("Time: " + m_time);
+        //Debug.Log("Time: " + m_time);
     }
 
     private SynchronizedActor GetNextActorTurn()

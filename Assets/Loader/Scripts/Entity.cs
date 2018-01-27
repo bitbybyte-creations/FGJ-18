@@ -56,7 +56,7 @@ public abstract class Entity
 
     public void Move(int x, int y)
     {
-        Debug.Log("Entity " + _id + " Move to " + x + ", " + y);
+        //Debug.Log("Entity " + _id + " Move to " + x + ", " + y);
         _x = x;
         _y = y;
         if (_pos != null)
