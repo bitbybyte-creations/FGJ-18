@@ -10,6 +10,7 @@ public enum PING_TYPES
     ARTIFACT = 2000,
     SIGNAL = 3000,
     PLAYER = 4000,
+    END = 5000,
 }
 
 public class Ping : MonoBehaviour {
@@ -77,41 +78,59 @@ public class Ping : MonoBehaviour {
         set
         {
             type_ = value;
-            switch (type_)
-            {
-                case PING_TYPES.ENERGY:
-                    {
-                        color = Color.white;
-                        typeText_.text = "TYPE: ENERGY";
-                        distanceText_.text = string.Format("Distance: {0}", ((int)distance));
-                        break;
-                    }
-                case PING_TYPES.ARTIFACT:
-                    {
-                        color = Color.yellow;
-                        typeText_.text = "TYPE: ARTIFACT";
-                        distanceText_.text = string.Format("Distance: {0}", ((int)distance));
-                        break;
-                    }
-                case PING_TYPES.SIGNAL:
-                    {
-                        color = Color.red;
-                        typeText_.text = "TYPE: UNKNOWN";
-                        distanceText_.text = string.Format("Distance: {0}", ((int)distance));
-                        break;
-                    }
-                case PING_TYPES.PLAYER:
-                    {
-                        color = Color.blue;
-                        typeText_.text = "TYPE: SELF";
-                        distanceText_.text = string.Format("ENERGY LEFT: {0}", WorldMapController.instance_.player.energyleft_.ToString());
-                        break;
-                    }
-                default:
-                    {
-                        break;
-                    }
-            }
+            UpdateTypeTexts(type);
+            
+        }
+    }
+
+    public void UpdateTypeTexts(PING_TYPES type)
+    {
+        switch (type)
+        {
+            case PING_TYPES.ENERGY:
+                {
+                    color = Color.white;
+                    typeText_.text = "TYPE: ENERGY";
+                    distanceText_.text = string.Format("Distance: {0}", ((int)distance));
+                    costText_.text = WorldMapController.instance_.player.EnergyCost(transform.position).ToString();
+                    break;
+                }
+            case PING_TYPES.ARTIFACT:
+                {
+                    color = Color.yellow;
+                    typeText_.text = "TYPE: ARTIFACT";
+                    distanceText_.text = string.Format("Distance: {0}", ((int)distance));
+                    costText_.text = WorldMapController.instance_.player.EnergyCost(transform.position).ToString();
+                    break;
+                }
+            case PING_TYPES.SIGNAL:
+                {
+                    color = Color.red;
+                    typeText_.text = "TYPE: UNKNOWN";
+                    distanceText_.text = string.Format("Distance: {0}", ((int)distance));
+                    costText_.text = WorldMapController.instance_.player.EnergyCost(transform.position).ToString();
+                    break;
+                }
+            case PING_TYPES.PLAYER:
+                {
+                    color = Color.blue;
+                    typeText_.text = "TYPE: SELF";
+                    distanceText_.text = string.Format("ENERGY LEFT: {0}", (int)WorldMapController.instance_.player.energyLeft);
+                    costText_.text = WorldMapController.instance_.player.EnergyCost(transform.position).ToString();
+                    break;
+                }
+            case PING_TYPES.END:
+                {
+                    color = Color.white;
+                    typeText_.text = "TYPE: MASSIVE ENERGY READING";
+                    distanceText_.text = string.Format("Distance: {0}", ((int)distance));
+                    costText_.text = WorldMapController.instance_.player.EnergyCost(transform.position).ToString();
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
         }
     }
 
@@ -133,13 +152,18 @@ public class Ping : MonoBehaviour {
             Cursor.visible = !display;
         };
         // Checks distance and compares to player energy, and makes the button interactable or no based on that
-        if (WorldMapController.instance_.player.EnergyCost(transform.position) < distance)
+        if (WorldMapController.instance_.player.EnergyCost(transform.position) < WorldMapController.instance_.player.energyLeft && type_ != PING_TYPES.PLAYER)
         {
             pingButton_.interactable = true;
         }
         else
         {
             pingButton_.interactable = false;
+            // We don't need the button if this is the player!
+            if (type_ == PING_TYPES.PLAYER)
+            {
+                pingButton_.gameObject.SetActive(false);
+            }
         }
         costText_.text = WorldMapController.instance_.player.EnergyCost(transform.position).ToString();
 
@@ -147,11 +171,12 @@ public class Ping : MonoBehaviour {
 
     public void ClickedPing()
     {
+        DisplayText(false);
         // Tell the player to start moving
         if (pingButton_.interactable)
         {
-
-        }
+            WorldMapController.instance_.player.NewTravel(GetComponent<RectTransform>());
+        };
     }
 
     void Update()
@@ -159,6 +184,7 @@ public class Ping : MonoBehaviour {
         if (display_)
         {
             pingInteractTransform_.position = Input.mousePosition;
+            UpdateTypeTexts(type_);
         };
     }
 

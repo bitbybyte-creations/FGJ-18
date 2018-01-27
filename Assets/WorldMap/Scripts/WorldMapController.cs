@@ -8,6 +8,8 @@ public class WorldMapController : Object {
 
     private PlayerWorldMap player_;
 
+    private Transform worldMap_;
+
     public static WorldMapController instance_
     {
         get
@@ -31,11 +33,28 @@ public class WorldMapController : Object {
             return player_;
         }
     }
+    public Transform worldMap
+    {
+        get
+        {
+            if (worldMap_ == null)
+            {
+                worldMap_ = GameObject.Find("WorldMap").transform;
+            };
+            return worldMap_;
+        }
+    }
 
     void Start()
     {
 
 
     }
+
+    void CreateRandomPings()
+    {
+
+    }
+
 
 }
