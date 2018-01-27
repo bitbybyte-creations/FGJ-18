@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class SynchronizedActor : MonoBehaviour {
     
-    private int m_cooldown = 0;
+    private ulong m_nextAction = 0;
     public event System.Action<bool> OnTurnStatusChange;
 
-    public int ActionTime
+    public ulong ActionTime
     {
         get
         {
-            return m_cooldown;
+            return m_nextAction;
         }
         set
         {
-            m_cooldown = value;
+            m_nextAction = value;
         }
     }
 

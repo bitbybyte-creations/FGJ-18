@@ -43,7 +43,7 @@ public class Synchronizer
     }
 
     private List<SynchronizedActor> m_actorList = new List<SynchronizedActor>();
-    private int m_time = 0;
+    private ulong m_time = 0;
 
     public static bool IsPlayerTurn { get { return Instance.Player.ActionTime == 0; } }
 
@@ -65,7 +65,7 @@ public class Synchronizer
     internal static void Continue(SynchronizedActor actor, int actionCost)
     {
         
-        actor.ActionTime += actionCost;
+        actor.ActionTime += (ulong)actionCost;
         actor.EndTurn();
         Debug.Log(actor.name + " Action Complete, Next Action Time: "+actor.ActionTime);
         SynchronizedActor next = Instance.GetNextActorTurn();
@@ -91,7 +91,7 @@ public class Synchronizer
     {        
         foreach (SynchronizedActor actor in m_actorList)
         {
-            Debug.Log(actor.name + " Next Action ? " + actor.HasNextAction);
+            //Debug.Log(actor.name + " Next Action ? " + actor.HasNextAction);
             if (actor.HasNextAction)
             {
                 actor.ResolveAction();
@@ -105,8 +105,8 @@ public class Synchronizer
     {
         foreach (SynchronizedActor a in m_actorList)
         {
-            Debug.Log(a.name + " AT: " + a.ActionTime + " vs. " + m_time);
-            if (a.ActionTime <= m_time)
+            //Debug.Log(a.name + " AT: " + a.ActionTime + " vs. " + m_time);
+            if ((ulong)a.ActionTime <= m_time)
             {                
                 return a;
             }

@@ -30,7 +30,7 @@ public class MovingEntity : MonoBehaviour {
     }
 
     //position in 2d map. in drawable world x = x but map y =z;
-    private const float xz_offset = 0.5f;
+    private const float xz_offset = 0f;
 
     public Vector2 MapPosition
     {

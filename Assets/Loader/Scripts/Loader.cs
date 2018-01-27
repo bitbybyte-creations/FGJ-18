@@ -56,7 +56,7 @@ public class Map
     {
         return _tiles;
     }
-
+    
     public char GetTile(int x, int y)
     {
         if (x < 0 || y < 0 || x > _tiles.GetLength(0) - 1 || y > _tiles.GetLength(1) - 1)

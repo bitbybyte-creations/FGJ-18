@@ -202,8 +202,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 376731431}
-  - component: {fileID: 376731430}
   - component: {fileID: 376731432}
+  - component: {fileID: 376731430}
   m_Layer: 0
   m_Name: Spawn
   m_TagString: Untagged
@@ -219,13 +219,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 376731429}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6369213337e27dc44a802c63475f7d6a, type: 3}
+  m_Script: {fileID: 11500000, guid: ee947ed832393424ebf88a98fcea4cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 1696795042462732, guid: c1f5cb8bbb5fe294ab4234d1f8bf6c5f, type: 2}
-  xPosition: 32
-  yPosition: 32
+  xPosition: 0
+  yPosition: 0
   heightOffset: 1
+  spawnCount: 1
+  maxXPosition: 63
+  maxYPosition: 63
 --- !u!4 &376731431
 Transform:
   m_ObjectHideFlags: 0
