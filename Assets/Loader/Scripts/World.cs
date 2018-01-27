@@ -12,15 +12,6 @@ public class World
 
     }
 
-    public void InitTestMap()
-    {
-        //_entities = new List<IEntity>();
-
-        Map map = Loader.LoadMap();
-        _grid = new Grid(map);
-        _world = this;
-    }
-
     private World(Map map)
     {
         _grid = new Grid(map);
@@ -31,6 +22,15 @@ public class World
         if (_world == null)
             _world = new World();
         return _world;
+    }
+
+    public void InitTestMap()
+    {
+        //_entities = new List<IEntity>();
+
+        Map map = Loader.LoadMap();
+        _grid = new Grid(map);
+        _world = this;
     }
 
     public void Draw()
