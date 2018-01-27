@@ -35,11 +35,12 @@ public class SpawnAtLocation : MonoBehaviour {
                 Entity entity = null;
                 if (actor.tag == "Player")
                 {
-                    entity= new Player(x, y);
+                    entity= new Player(x, y, EntityStatistics.GetRandomPlayerStats());
                 }
                 else if (actor.tag == "Enemy")
                 {
-                    entity = new Monster(x, y);
+                    MonsterConfig config = spawn.GetComponent<MonsterConfig>();
+                    entity = new Monster(x, y, config.GetStats());
                 }
                 if (entity != null)
                     actor.InitActor(entity);

@@ -9,7 +9,16 @@ public abstract class Entity
     private SynchronizedActor _actor;
     private int _x, _y;
     private int _id;
+    private EntityStatistics m_stats;
 
+    public EntityStatistics Stats
+    {
+        get
+        {
+            return m_stats;
+        }
+        protected set { m_stats = value; }
+    }
     public void GetPosition(out int x, out int y)
     {        
         x = _x;
@@ -60,17 +69,17 @@ public abstract class Entity
 public class Player : Entity
 {
 
-    public Player(int x, int y) : base(x, y)
+    public Player(int x, int y, EntityStatistics stats) : base(x, y)
     {
-        
+        Stats = stats;
     }
 
 }
 
 public class Monster : Entity
 {
-    public Monster(int x, int y) : base(x, y)
+    public Monster(int x, int y, EntityStatistics stats) : base(x, y)
     {
-
+        Stats = stats;
     }
 }

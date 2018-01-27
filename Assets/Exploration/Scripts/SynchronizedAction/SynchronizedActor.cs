@@ -9,9 +9,18 @@ public class SynchronizedActor : MonoBehaviour {
     public event System.Action<bool> OnTurnStatusChange;
     private Entity m_myEntity;
 
+    public EntityStatistics Stats
+    {
+        get
+        {
+            return m_myEntity.Stats;
+        }
+    }
+
     public void InitActor(Entity entity)
     {        
         m_myEntity = entity;
+        m_attackingEntity = GetComponent<AttackingEntity>();
         SynchronizeEntity();
         
     }
@@ -69,6 +78,7 @@ public class SynchronizedActor : MonoBehaviour {
 
 
     private SyncAction m_next;
+    private AttackingEntity m_attackingEntity;
 
     public bool HasNextAction
     {
@@ -77,6 +87,8 @@ public class SynchronizedActor : MonoBehaviour {
             return m_next != null;
         }        
     }
+
+    public AttackingEntity AttackingEntity { get { return m_attackingEntity; } }
 
     public void ResolveAction()
     {
@@ -110,6 +122,17 @@ public class SynchronizedActor : MonoBehaviour {
         if (OnTurnStatusChange != null)
             OnTurnStatusChange(true);
     }
+
+    internal void Moan(int dmg)
+    {
+        Debug.Log("I got damage: " + dmg);
+        if (Stats.Health <= 0)
+        {
+            Debug.Log(Stats.Name + " died...");
+        }
+        //todo print damage text;
+    }
+
     public void EndTurn()
     {
         Debug.Log("Actor: " + name + " End Turn");
