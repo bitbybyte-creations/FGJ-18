@@ -3,12 +3,13 @@ using System.Collections;
 
 public class ExplorationInit : MonoBehaviour
 {
-    private World m_world;
     // Use this for initialization
     void Start()
     {
-        m_world = new World(Loader.LoadFloorTileMap(64));
-        m_world.Draw();
+        Map map = Loader.LoadFloorTileMap(64);
+        map.GetTiles()[32, 32] = '#';
+        World.Instance.Init(map).Draw();
+
         Invoke("Init", 2f);
     }
 
