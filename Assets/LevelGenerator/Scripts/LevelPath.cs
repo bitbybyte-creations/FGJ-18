@@ -9,6 +9,20 @@ public struct LevelPoint
     public int X;
     public int Y;
 
+    public override bool Equals(object obj)
+    {
+
+        if(!GetType().Equals(obj.GetType()))
+        {
+            return false;
+        }
+
+        LevelPoint p = (LevelPoint)obj;
+
+        return p.X == X && p.Y == Y;
+
+    }
+
 }
 
 
@@ -21,7 +35,6 @@ public class LevelPath
     private int m_maxSize;
     private int m_levelWith;
     private int m_levelHeigth;
-
     private static Random Rand = new Random();
 
     private LevelPoint[] m_points = null;

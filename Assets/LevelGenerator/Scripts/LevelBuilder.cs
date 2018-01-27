@@ -15,8 +15,16 @@ public class LevelBuilder : MonoBehaviour {
     public int MaxPaths = 10;
     public int MinPaths = 5;
 
-    private LevelType m_levelType = LevelType.None;
-    private LevelPoint m_startPoint;
+
+    public int MaxEnemySpawnCount = 50;
+    public int MinEnemySpawnCount = 10;
+
+    public int EnemyMinDistance = 10;
+
+    public LevelType LevelType = LevelType.None;
+    public LevelPoint StartPoint;
+
+    public LevelBuildMode BuildMode = LevelBuildMode.FollowAndContinue;
 
     private const int UP_LEFT = 0;
     private const int UP_RIGTH = 1;
@@ -24,6 +32,9 @@ public class LevelBuilder : MonoBehaviour {
     private const int DOWN_RIGTH = 3;
 
     public LevelPoint[] FourCorners = new LevelPoint[4];
+    public LevelPoint[] EnemySpawnPoints = null;
+
+    public List<LevelPoint> FloorPoints = new List<LevelPoint>();
 
     void Start()
     {
@@ -57,6 +68,10 @@ public class LevelBuilder : MonoBehaviour {
             foreach (LevelPoint point in path)
             {
                 offerAsCorner(point);
+                if (!FloorPoints.Contains(point))
+                {
+                    FloorPoints.Add(point);
+                }
                 worldData[point.X, point.Y] = '_';
             }
         }
@@ -70,22 +85,22 @@ public class LevelBuilder : MonoBehaviour {
     {
 
 
-        if((FourCorners[UP_LEFT].X - FourCorners[UP_LEFT].Y)/2 > (point.X - point.Y)/2)
+        if((FourCorners[UP_LEFT].X - FourCorners[UP_LEFT].Y)/2f > (point.X - point.Y)/2f)
         {
             FourCorners[UP_LEFT] = point;
         }
 
-        if ((FourCorners[UP_RIGTH].X + FourCorners[UP_RIGTH].Y)/2 < (point.X + point.Y)/2)
+        if ((FourCorners[UP_RIGTH].X + FourCorners[UP_RIGTH].Y)/2f < (point.X + point.Y)/2f)
         {
             FourCorners[UP_RIGTH] = point;
         }
 
-        if ((FourCorners[DOWN_LEFT].X + FourCorners[DOWN_LEFT].Y)/2 > (point.X + point.Y)/2)
+        if ((FourCorners[DOWN_LEFT].X + FourCorners[DOWN_LEFT].Y)/2f > (point.X + point.Y)/2f)
         {
             FourCorners[DOWN_LEFT] = point;
         }
 
-        if ((FourCorners[DOWN_RIGTH].X - FourCorners[DOWN_RIGTH].Y)/2 < (point.X - point.Y)/2)
+        if ((FourCorners[DOWN_RIGTH].X - FourCorners[DOWN_RIGTH].Y)/2f < (point.X - point.Y)/2f)
         {
             FourCorners[DOWN_RIGTH] = point;
         }
@@ -156,15 +171,24 @@ public class LevelBuilder : MonoBehaviour {
 
         int count = Random.Range(MinPaths,MaxPaths);
         LevelPoint[] lastPath = RunPath(LevelWidth/2,LevelHeigth/2);
-        if(m_levelType == LevelType.Ambush)
+        if(LevelType == LevelType.Ambush)
         {
-            m_startPoint = lastPath[0];
+            StartPoint = lastPath[0];
         }
         applyPath(worldData,lastPath);
 
         for(int i = 1; i < count; i++)
         {
-            LevelPoint start = lastPath[Random.Range(0,lastPath.Length)];
+            LevelPoint start;
+            if (BuildMode == LevelBuildMode.FollowAndContinue)
+            {
+                start = lastPath[Random.Range(0, lastPath.Length)];
+            }
+            else
+            {
+                start.X = LevelWidth / 2;
+                start.Y = LevelHeigth / 2;
+            }
             LevelPoint[] path = RunPath(start.X,start.Y);
             applyPath(worldData, path);
             lastPath = path;
@@ -189,6 +213,8 @@ public class LevelBuilder : MonoBehaviour {
         FourCorners[DOWN_RIGTH].X = 0;
         FourCorners[DOWN_RIGTH].Y = LevelHeigth;
 
+        FloorPoints.Clear();
+
         if (m_world.GetGrid() == null)
         {
             return;
@@ -203,18 +229,30 @@ public class LevelBuilder : MonoBehaviour {
         }
     }
 
-    public LevelPoint StartPoint
+    private void generateSpawnEnemySpawnPoints()
     {
-        get
+
+        for(int i = 0; i < EnemySpawnPoints.Length; i++)
         {
-            return m_startPoint;
+
+            while (true)
+            {
+                EnemySpawnPoints[i] = FloorPoints[Random.Range(0, FloorPoints.Count)];
+
+                if (Mathf.Abs(EnemySpawnPoints[i].X - StartPoint.X) + Mathf.Abs(EnemySpawnPoints[i].Y - StartPoint.Y) > EnemyMinDistance)
+                {
+                    break;
+                }
+
+            }
         }
+
+
     }
 
 
-    public void Generate(LevelType levelType)
+    public void Generate()
     {
-
         char[,] worldData = new char[LevelWidth,LevelHeigth];
         fill(worldData,'#');
 
@@ -224,6 +262,15 @@ public class LevelBuilder : MonoBehaviour {
 
         m_world.InitMap(new Map(worldData));
         m_world.Draw();
+
+        if (LevelType != LevelType.Ambush)
+        {
+            StartPoint = FourCorners[Random.Range(0, 4)];
+        }
+
+        EnemySpawnPoints = new LevelPoint[Random.Range(MinEnemySpawnCount, MaxEnemySpawnCount)];
+        generateSpawnEnemySpawnPoints();
+
 
         foreach(World.Tile tile in m_world.GetGrid().GetCell(FourCorners[UP_LEFT].X, FourCorners[UP_LEFT].Y).GetTiles())
         {
@@ -244,6 +291,21 @@ public class LevelBuilder : MonoBehaviour {
         {
             tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.green;
         }
+
+
+        foreach (World.Tile tile in m_world.GetGrid().GetCell(StartPoint.X, StartPoint.Y).GetTiles())
+        {
+            tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.yellow;
+        }
+
+        foreach (LevelPoint point in EnemySpawnPoints)
+        {
+            foreach (World.Tile tile in m_world.GetGrid().GetCell(point.X, point.Y).GetTiles())
+            {
+                tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.black;
+            }
+        }
+
 
     }
 
