@@ -9,6 +9,7 @@ public class World
     private bool _init = false;
     private static World _world;
     private Grid _grid;
+    private int[,] _heatMap;
 
     private World()
     {
@@ -73,6 +74,25 @@ public class World
         int x = _grid.GetCells().GetLength(0);
         int y = _grid.GetCells().GetLength(1);
         CreateFloorCollider(x, y);
+    }
+
+    //public Vector2 GetPlayerPosition()
+    //{
+    //    foreach (Cell c in _grid.GetCells())
+    //        if (c.ContainsEntity && c.GetEntity().GetType() == typeof(Player))
+    //            return c.GetEntity().GetPositionVector();
+    //
+    //    return Vector2.negativeInfinity;
+    //}
+
+    public void SetHeatMap(int[,] hate)
+    {
+        _heatMap = hate;
+    }
+
+    public int[,] GetHeatMap()
+    {
+        return _heatMap;
     }
 
     public Grid GetGrid()
