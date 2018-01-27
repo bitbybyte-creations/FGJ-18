@@ -97,13 +97,13 @@ public class World
                         case '#':
 
                             if ('_'.Equals(map.GetTile(x - 1, y)))
+                                c.AddTile(Tile.Set.WALL, x, y, 90);
+                            if ('_'.Equals(map.GetTile(x, y - 1)))
                                 c.AddTile(Tile.Set.WALL, x, y, 0);
-                            if ('_'.Equals(map.GetTile(x - 1, y)))
-                                c.AddTile(Tile.Set.WALL, x, y - 1, 0);
-                            if ('_'.Equals(map.GetTile(x - 1, y)))
-                                c.AddTile(Tile.Set.WALL, x + 1, y, 0);
-                            if ('_'.Equals(map.GetTile(x - 1, y + 1)))
-                                c.AddTile(Tile.Set.WALL, x, y, 0);
+                            if ('_'.Equals(map.GetTile(x + 1, y)))
+                                c.AddTile(Tile.Set.WALL, x, y, 270);
+                            if ('_'.Equals(map.GetTile(x, y + 1)))
+                                c.AddTile(Tile.Set.WALL, x, y, 180);
                             break;
                         case '_':
                             c.AddTile(Tile.Set.FLOOR, x, y, 0);
