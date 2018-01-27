@@ -259,7 +259,7 @@ public class World
 
             public static string FLOOR { get { return GetSet() + "Floor"; } }
             public static string WALL = GetSet() + "Wall";
-            public static string CORNER = GetSet() + "Corner";
+            public static string CORNER = GetSet() + "CornerConvex";
 
         }
 
