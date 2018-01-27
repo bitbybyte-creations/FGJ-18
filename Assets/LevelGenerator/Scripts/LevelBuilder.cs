@@ -41,10 +41,13 @@ public class LevelBuilder : MonoBehaviour {
 
     public List<LevelPoint> FloorPoints = new List<LevelPoint>();
 
+    void Awake()
+    {
+       m_world = World.GetInstance();
+    }
+
     void Start()
     {
-
-        m_world = World.GetInstance();
         
       //  m_world.Draw();
     }
