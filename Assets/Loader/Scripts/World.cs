@@ -42,6 +42,10 @@ public class World
         _init = true;
         return this;
     }
+    public void InitMap(Map map)
+    {
+        _grid = new Grid(map);
+    }
 
     public static void OnWorldInitialized(System.Action<World> action)
     {
@@ -66,11 +70,37 @@ public class World
         {
             OnWorldInitializedEvent(this);
         }
+        int x = _grid.GetCells().GetLength(0);
+        int y = _grid.GetCells().GetLength(1);
+        CreateFloorCollider(x, y);
     }
 
     public Grid GetGrid()
     {
         return _grid;
+    }
+
+    public GameObject CreateFloorCollider(int x, int y)
+    {
+        Mesh m = new Mesh();
+        m.name = "floor_collider";
+        m.SetVertices(
+            new List<Vector3> {
+                new Vector3(-1, 0.01f, -1),
+                new Vector3(-1, 0.01f, y),
+                new Vector3(x, 0.01f, -1),
+                new Vector3(x , 0.01f, y)
+            });
+        m.triangles = new int[] { 0, 1, 2, 2, 1, 3 };
+        m.RecalculateNormals();
+
+        GameObject plane = new GameObject("plane");
+        MeshFilter mf = (MeshFilter)plane.AddComponent(typeof(MeshFilter));
+        mf.mesh = m;
+        MeshRenderer rend = plane.AddComponent(typeof(MeshRenderer)) as MeshRenderer;
+        MeshCollider col = plane.AddComponent(typeof(MeshCollider)) as MeshCollider;
+
+        return plane;
     }
 
     public class Cell
@@ -107,7 +137,10 @@ public class World
             }
 
         }
-
+        public List<Tile> GetTiles()
+        {
+            return _tiles;
+        }
         public List<Item> GetItems()
         {
             return _items;
@@ -246,6 +279,11 @@ public class World
             _type = type;
             _pos = pos;
             _rot = rot;
+        }
+
+        public GameObject GetGO()
+        {
+            return _go;
         }
 
         public void Draw()
