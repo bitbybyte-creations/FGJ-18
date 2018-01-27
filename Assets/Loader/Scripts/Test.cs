@@ -18,7 +18,7 @@ public class Test : MonoBehaviour {
 
         //GameObject floor = Instantiate(Resources.Load("Prefabs/Tilesets/Concrete/Floor") as GameObject);
 
-        //World w = new World();
+        World.Instance.InitTest().Draw();
         //w.Draw();
     }
 	

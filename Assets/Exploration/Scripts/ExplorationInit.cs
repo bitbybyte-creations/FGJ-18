@@ -9,6 +9,7 @@ public class ExplorationInit : MonoBehaviour
         Map map = Loader.LoadFloorTileMap(64);
         map.GetTiles()[32, 32] = '#';
         World.Instance.Init(map).Draw();
+
         Invoke("Init", 2f);
     }
 

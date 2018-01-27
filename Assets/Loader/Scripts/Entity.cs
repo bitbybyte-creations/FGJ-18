@@ -2,37 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IEntity
+public abstract class Entity
 {
-    
+    private World.Cell _pos;
+
+    public Entity(int x, int y)
+    {
+        Move(x, y);
+    }
+
+    public World.Cell GetCell()
+    {
+        return _pos;
+    }
+
+    public void Move(int x, int y)
+    {
+        _pos.SetEntity(null);
+        _pos = World.GetInstance().GetGrid().GetCell(x, y);
+        _pos.SetEntity(this);
+    }    
 }
 
-public class Player : IEntity
+public class Player : Entity
 {
-    private int _x;
-    private int _y;
 
-    public Player(int x, int y)
+    public Player(int x, int y) : base(x, y)
     {
-        _x = x;
-        _y = y;
-    }
-    public void GetPosition(out int x, out int y)
-    {
-        x = _x;
-        y = _y;
+        
     }
 
-    public Vector2 PositionVector
-    {
-        get
-        {
-            return new Vector2(_x, _y);
-        }
-    }
 }
 
-public class Monster : IEntity
+public class Monster : Entity
 {
-    
+    public Monster(int x, int y) : base(x, y)
+    {
+
+    }
 }
