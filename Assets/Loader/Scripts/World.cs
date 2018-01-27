@@ -9,10 +9,16 @@ public class World
 
     private World()
     {
+
+    }
+
+    public void InitTestMap()
+    {
         //_entities = new List<IEntity>();
 
         Map map = Loader.LoadMap();
         _grid = new Grid(map);
+        _world = this;
     }
 
     private World(Map map)
