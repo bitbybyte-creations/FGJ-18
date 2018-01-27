@@ -17,10 +17,10 @@ public class SpawnAtLocation : MonoBehaviour {
 
     protected virtual void startSpawn(World world)
     {
-        Spawn(xPosition, yPosition);
+        Spawn(xPosition, yPosition, prefab);
     }
 
-    public void Spawn(int x, int y)
+    public static void Spawn(int x, int y, GameObject prefab)
     {
         World.Grid grid = World.Instance.GetGrid();
         World.Cell cell = grid.GetCell(x, y);
@@ -28,7 +28,7 @@ public class SpawnAtLocation : MonoBehaviour {
         {            
             //Vector3 position = new Vector3(x, heightOffset, y);            
             GameObject spawn = Instantiate<GameObject>(prefab);
-            spawn.transform.position = spawn.transform.position + new Vector3(0, heightOffset, 0);
+            spawn.transform.position = spawn.transform.position;
             SynchronizedActor actor = spawn.GetComponent<SynchronizedActor>();
             if (actor != null)
             {

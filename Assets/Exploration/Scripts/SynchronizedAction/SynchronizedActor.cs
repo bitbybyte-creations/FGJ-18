@@ -34,7 +34,7 @@ public class SynchronizedActor : MonoBehaviour {
         pos.x = x;
         pos.z = y;
         transform.position = pos;
-        Debug.Log("Synchronize Entity " + name + ", pos " + x + ',' + y);
+        //Debug.Log("Synchronize Entity " + name + ", pos " + x + ',' + y);
     }
 
     public Entity Entity
@@ -92,10 +92,10 @@ public class SynchronizedActor : MonoBehaviour {
 
     public void ResolveAction()
     {
-        Debug.Log("Resolving Next Action");
+        //Debug.Log("Resolving Next Action");
         if (m_next != null)
         {
-            Debug.Log(name +" Executing Action");
+            //Debug.Log(name +" Executing Action");
             m_next.Execute();
             m_next = null;
         }
@@ -118,7 +118,7 @@ public class SynchronizedActor : MonoBehaviour {
 
     public void GiveTurn()
     {
-        Debug.Log("Actor: " + name + " Begin Turn");
+        //Debug.Log("Actor: " + name + " Begin Turn");
         if (OnTurnStatusChange != null)
             OnTurnStatusChange(true);
     }
@@ -135,7 +135,7 @@ public class SynchronizedActor : MonoBehaviour {
 
     public void EndTurn()
     {
-        Debug.Log("Actor: " + name + " End Turn");
+        //Debug.Log("Actor: " + name + " End Turn");
         if (OnTurnStatusChange != null)
             OnTurnStatusChange(false);
     }

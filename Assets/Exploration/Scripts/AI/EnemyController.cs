@@ -31,7 +31,7 @@ public class EnemyController : MonoBehaviour {
 
     private void OnTurnStatusChange(bool myTurn)
     {
-        Debug.Log("Enemy: " + name + " turn status: " + myTurn);
+        //Debug.Log("Enemy: " + name + " turn status: " + myTurn);
         m_myTurn = myTurn;
     }
 

@@ -13,7 +13,7 @@ public class SpawnToArea : SpawnAtLocation
         {
             int x = UnityEngine.Random.Range(xPosition, maxXPosition);
             int y = UnityEngine.Random.Range(yPosition, maxYPosition);
-            Spawn(x, y);
+            Spawn(x, y, prefab);
         }
     }
 

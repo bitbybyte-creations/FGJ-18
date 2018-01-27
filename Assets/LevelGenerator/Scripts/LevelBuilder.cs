@@ -41,10 +41,13 @@ public class LevelBuilder : MonoBehaviour {
 
     public List<LevelPoint> FloorPoints = new List<LevelPoint>();
 
+    void Awake()
+    {
+       m_world = World.GetInstance();
+    }
+
     void Start()
     {
-
-        m_world = World.GetInstance();
         
       //  m_world.Draw();
     }
@@ -224,7 +227,7 @@ public class LevelBuilder : MonoBehaviour {
 
         FloorPoints.Clear();
 
-        if (m_world.GetGrid() == null)
+        if (m_world == null || m_world.GetGrid() == null)
         {
             return;
         }
@@ -263,11 +266,18 @@ public class LevelBuilder : MonoBehaviour {
     private void generateObjectivePoint()
     {
 
-
+        int count = 0;
         while (true)
         {
-            ObjectivePoint = FloorPoints[Random.Range(0, FloorPoints.Count)];
 
+            if(count > FloorPoints.Count * FloorPoints.Count)
+            {
+                MinObjectiveDistance--;
+                count = 0;
+            }
+
+            ObjectivePoint = FloorPoints[Random.Range(0, FloorPoints.Count)];
+            count++;
             if (Mathf.Abs(ObjectivePoint.X - StartPoint.X) + Mathf.Abs(ObjectivePoint.Y - StartPoint.Y) > MinObjectiveDistance)
             {
                 break;
@@ -336,7 +346,7 @@ public class LevelBuilder : MonoBehaviour {
         {
             foreach (World.Tile tile in m_world.GetGrid().GetCell(ObjectivePoint.X, ObjectivePoint.Y).GetTiles())
             {
-                tile.GetGO().GetComponent<MeshRenderer>().material.color = new Color(1f, 0.3f, 0.5f);
+                tile.GetGO().GetComponent<MeshRenderer>().material.color = new Color(0.2f, 0.4f, 0.1f);
             }
         }
 
