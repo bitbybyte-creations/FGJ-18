@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,34 @@ public class SynchronizedActor : MonoBehaviour {
     
     private ulong m_nextAction = 0;
     public event System.Action<bool> OnTurnStatusChange;
+    private Entity m_myEntity;
+
+    public void InitActor(Entity entity)
+    {        
+        m_myEntity = entity;
+        SynchronizeEntity();
+        
+    }
+
+    private void SynchronizeEntity()
+    {
+        m_myEntity.Actor = this;
+        Vector3 pos = transform.position;
+        int x, y;
+        m_myEntity.GetPosition(out x, out y);
+        pos.x = x;
+        pos.z = y;
+        transform.position = pos;
+        Debug.Log("Synchronize Entity " + name + ", pos " + x + ',' + y);
+    }
+
+    public Entity Entity
+    {
+        get
+        {
+            return m_myEntity;
+        }
+    }
 
     public ulong ActionTime
     {

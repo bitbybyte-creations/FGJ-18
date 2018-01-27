@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class World
 {
+    private static event System.Action<World> OnWorldInitializedEvent;
+
+    private bool _init = false;
     private static World _world;
     private Grid _grid;
 
     private World()
     {
-        
+
     }
 
     public static World GetInstance()
@@ -30,22 +33,38 @@ public class World
     public World InitTest()
     {
         Map map = Loader.LoadMap();
-        _grid = new Grid(map);
-        return _world;
+        return Init(map);
     }
 
     public World Init(Map map)
     {
         _grid = new Grid(map);
+        _init = true;
         return this;
     }
 
+    public static void OnWorldInitialized(System.Action<World> action)
+    {
+        if (_world != null && _world._init)
+        {
+            action(_world);
+        }
+        else
+        {
+            OnWorldInitializedEvent += action;
+        }
+    }
 
     public void Draw()
     {
-        foreach(Cell c in _grid.GetCells())
+        foreach (Cell c in _grid.GetCells())
         {
             c.DrawTiles();
+        }
+        Debug.Log("World Initialized");
+        if (OnWorldInitializedEvent != null)
+        {
+            OnWorldInitializedEvent(this);
         }
     }
 
@@ -73,20 +92,20 @@ public class World
 
         public void DrawTiles()
         {
-            foreach(Tile t in _tiles)
+            foreach (Tile t in _tiles)
             {
                 t.Draw();
             }
         }
 
-        public bool IsBlocked()
+        public bool IsBlocked
         {
-            return _blocked;
-        }
+            get { return _blocked; }
+            set
+            {
+                _blocked = value;
+            }
 
-        public void SetBlocked(bool blocked)
-        {
-            _blocked = blocked;
         }
 
         public List<Item> GetItems()
@@ -94,9 +113,12 @@ public class World
             return _items;
         }
 
-        public bool ContainsEntity()
+        public bool ContainsEntity
         {
-            return _items != null;
+            get
+            {
+                return _entity != null;
+            }
         }
 
         public Entity GetEntity()
@@ -113,6 +135,16 @@ public class World
         {
             _tiles.Add(new Tile(type, new Vector3(x, 0, y), new Vector3(0, rot, 0)));
         }
+
+        public override string ToString()
+        {
+            string output = "Cell:\nItems: "+_items.Count;            
+            output += "\nTiles: "+_tiles.Count;
+            output += "\nEntity: " + (_entity != null ? _entity.Actor.name : "null");
+            output += "\nBlocked: " + IsBlocked;
+
+            return output;
+        }
     }
 
     public class Grid
@@ -123,7 +155,7 @@ public class World
         {
             _grid = new Cell[map.X, map.Y];
 
-            for(int x = 0; x < map.X; x++)
+            for (int x = 0; x < map.X; x++)
             {
                 for (int y = 0; y < map.Y; y++)
                 {
@@ -142,7 +174,7 @@ public class World
                             break;
                         case '_':
                             c.AddTile(Tile.Set.FLOOR, x, y, 0);
-                            c.SetBlocked(false);
+                            c.IsBlocked = false;
                             break;
                         case '7':
                             c.AddTile(Tile.Set.CORNER, x, y, 270);

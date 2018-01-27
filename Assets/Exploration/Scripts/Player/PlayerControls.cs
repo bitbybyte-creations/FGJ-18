@@ -46,8 +46,26 @@ public class PlayerControls : MonoBehaviour {
             if (move != Vector2.zero)
             {
                 Debug.Log("Move: " + move);
-                m_movingEntity.Move(move);
-                Synchronizer.Continue(m_actor, m_movingEntity.moveActionCost);
+                MovingEntity.MoveResult result = m_movingEntity.Move(move);
+                switch (result.Result)
+                {
+                    case MovingEntity.MoveResult.ResultValue.Ok:
+                        Synchronizer.Continue(m_actor, m_movingEntity.moveActionCost);
+                        break;
+                    case MovingEntity.MoveResult.ResultValue.TileBlocked:
+                        Debug.Log("Tile blocked!");
+                        break;
+                    case MovingEntity.MoveResult.ResultValue.TileOccupied:
+                        Debug.Log("Tile Occupied! Maybe attack?! ");
+                        Entity entity = result.Cell.GetEntity();
+                        if (entity.GetType() == typeof(Monster))
+                        {
+                            Debug.Log(name+" Attacking "+ entity.Actor.name);
+                        }
+                        break;
+                }
+
+                
             }
             
         }

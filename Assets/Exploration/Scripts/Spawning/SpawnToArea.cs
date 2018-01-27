@@ -7,7 +7,7 @@ public class SpawnToArea : SpawnAtLocation
     public int maxXPosition;
     public int maxYPosition;
 
-    protected override void startSpawn()
+    protected override void startSpawn(World w)
     {
         for (int i = 0; i < spawnCount; i++)
         {
