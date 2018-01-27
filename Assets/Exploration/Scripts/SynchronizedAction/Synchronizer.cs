@@ -113,4 +113,25 @@ public class Synchronizer
         }
         return null;
     }
+
+    internal static void KillEntity(SynchronizedActor actor)
+    {
+        Instance.kill(actor);
+        
+    }
+    private void kill(SynchronizedActor actor)
+    {
+        for (int i = 0; i < m_actorList.Count; i++)
+        {
+            if (actor == m_actorList[i])
+            {
+                m_actorList.RemoveAt(i);
+                break;
+            }
+            
+        }
+        actor.Entity.GetCell().SetEntity(null);
+        actor.gameObject.SetActive(false);
+
+    }
 }

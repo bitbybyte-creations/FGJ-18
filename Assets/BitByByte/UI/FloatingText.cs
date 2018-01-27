@@ -129,6 +129,7 @@ namespace BitByByte.UI
             Text = "<NULL>";
             Color = Color.white;
             Font = DEFAULT_FONT;
+            FontSize = DEFAULT_FONT_SIZE;
             Velocity = Vector3.up * 10f;
             Acceleration = Vector3.zero;
             LifeTime = DEFAULT_LIFE_TIME;
