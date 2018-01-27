@@ -21,7 +21,7 @@ public class SpawnAtLocation : MonoBehaviour {
 
     public void Spawn(int x, int y)
     {
-        Vector3 position = new Vector3(x + 0.5f, heightOffset, y + 0.5f);
+        Vector3 position = new Vector3(x, heightOffset, y);
         GameObject spawn = Instantiate<GameObject>(prefab, position, new Quaternion() );
 
     }
