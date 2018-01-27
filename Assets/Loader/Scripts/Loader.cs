@@ -47,8 +47,6 @@ public class Map
 
     public char GetTile(int x, int y)
     {
-        Debug.LogError(_tiles.GetLength(0) + " " + x);
-        Debug.LogError(_tiles.GetLength(1) + " " + y);
         if (x < 0 || y < 0 || x > _tiles.GetLength(0) - 1 || y > _tiles.GetLength(1) - 1)
             return '#';
         return _tiles[x, y];
