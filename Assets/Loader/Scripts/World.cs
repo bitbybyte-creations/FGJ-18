@@ -4,19 +4,27 @@ using UnityEngine;
 
 public class World
 {
-    //private List<IEntity> _entities;
+    private static World _world;
     private Grid _grid;
 
-    public World()
+    private World()
     {
         //_entities = new List<IEntity>();
 
         Map map = Loader.LoadMap();
         _grid = new Grid(map);
     }
-    public World(Map map)
+
+    private World(Map map)
     {
         _grid = new Grid(map);
+    }
+
+    public static World GetInstance()
+    {
+        if (_world == null)
+            _world = new World();
+        return _world;
     }
 
     public void Draw()
@@ -25,6 +33,11 @@ public class World
         {
             c.DrawTiles();
         }
+    }
+
+    public Grid GetGrid()
+    {
+        return _grid;
     }
 
     public class Cell
@@ -99,7 +112,6 @@ public class World
                     switch (map.GetTile(x, y))
                     {
                         case '#':
-
                             if ('_'.Equals(map.GetTile(x - 1, y)))
                                 c.AddTile(Tile.Set.WALL, x, y, 90);
                             if ('_'.Equals(map.GetTile(x, y - 1)))
@@ -148,7 +160,7 @@ public class World
     {
         public static GameObject GET(string _type)
         {
-            return Instantiate(Resources.Load(_type) as GameObject); ;
+            return Instantiate(Resources.Load(_type) as GameObject);
         }
     }
 
