@@ -303,15 +303,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c19b8221ce3fda4bb200661e55f0d88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelWidth: 100
-  LevelHeigth: 100
-  MaxPathLen: 50
-  MinPathLen: 25
-  MaxPaths: 40
-  MinPaths: 20
-  MaxEnemySpawnCount: 10
+  LevelWidth: 50
+  LevelHeigth: 50
+  MaxPathLen: 25
+  MinPathLen: 10
+  MaxPaths: 50
+  MinPaths: 30
+  MaxEnemySpawnCount: 20
   MinEnemySpawnCount: 5
-  EnemyMinDistance: 10
+  EnemyMinDistance: 5
   MinObjectiveDistance: 20
   LevelType: 1
   BuildMode: 1
