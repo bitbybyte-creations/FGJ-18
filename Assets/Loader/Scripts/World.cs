@@ -9,7 +9,7 @@ public class World
 
     private World()
     {
-
+        
     }
 
     private World(Map map)
@@ -24,13 +24,17 @@ public class World
         return _world;
     }
 
-    public void InitTestMap()
+    public static World InitPlain()
     {
-        //_entities = new List<IEntity>();
+        _world = new World(Loader.LoadFloorTileMap(64));
+        return _world;
+    }
 
+    public static World InitTest()
+    {
         Map map = Loader.LoadMap();
-        _grid = new Grid(map);
-        _world = this;
+        _world = new World(map);
+        return _world;
     }
 
     public void Draw()
@@ -51,7 +55,7 @@ public class World
         public static readonly Cell NULL = new Cell();
 
         private List<Item> _items;
-        private IEntity _entity;
+        private Entity _entity;
         private List<Tile> _tiles;
         private bool _blocked;
         //graphic objects?
@@ -91,9 +95,14 @@ public class World
             return _items != null;
         }
 
-        public IEntity GetEntity()
+        public Entity GetEntity()
         {
             return _entity;
+        }
+
+        public void SetEntity(Entity e)
+        {
+            _entity = e;
         }
 
         public void AddTile(string type, int x, int y, int rot)

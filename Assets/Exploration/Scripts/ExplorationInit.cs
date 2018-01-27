@@ -7,7 +7,7 @@ public class ExplorationInit : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        m_world = new World(Loader.LoadFloorTileMap(64));
+        m_world = World.InitPlain();
         m_world.Draw();
         Invoke("Init", 2f);
     }
