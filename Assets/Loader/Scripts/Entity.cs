@@ -72,6 +72,7 @@ public class Player : Entity
     public Player(int x, int y, EntityStatistics stats) : base(x, y)
     {
         Stats = stats;
+        GenerateHeatMap(x, y);
     }
 
     public new void Move(int x, int y)
@@ -100,27 +101,22 @@ public class Player : Entity
         while (queue.Count > 0)
         {
             Pos cell = queue.Dequeue();
-            Debug.Log(cell.x + " " + cell.y);
             int cost = heatMap[cell.x, cell.y] + 1;
-            Debug.Log(cell.x + 1 < xm && !c[cell.x + 1, cell.y].IsBlocked && heatMap[cell.x + 1, cell.y] == -1);
             if (cell.x + 1 < xm && !c[cell.x + 1, cell.y].IsBlocked && heatMap[cell.x + 1, cell.y] == -1)
             {
                 heatMap[cell.x + 1, cell.y] = cost;
                 queue.Enqueue(new Pos(cell.x + 1, cell.y));
             }
-            Debug.Log(cell.y + 1 < ym && !c[cell.x, cell.y + 1].IsBlocked && heatMap[cell.x, cell.y + 1] == -1);
             if (cell.y + 1 < ym && !c[cell.x, cell.y + 1].IsBlocked && heatMap[cell.x, cell.y + 1] == -1)
             {
                 heatMap[cell.x, cell.y + 1] = cost;
                 queue.Enqueue(new Pos(cell.x, cell.y + 1));
             }
-            Debug.Log(!(cell.x - 1 < 0) && !c[cell.x - 1, cell.y].IsBlocked && heatMap[cell.x - 1, cell.y] == -1);
             if (!(cell.x - 1 < 0) && !c[cell.x - 1, cell.y].IsBlocked && heatMap[cell.x - 1, cell.y] == -1)
             {
                 heatMap[cell.x - 1, cell.y] = cost;
                 queue.Enqueue(new Pos(cell.x - 1, cell.y));
             }
-            Debug.Log(!(cell.y - 1 < 0) && !c[cell.x, cell.y - 1].IsBlocked && heatMap[cell.x, cell.y - 1] == -1);
             if (!(cell.y - 1 < 0) && !c[cell.x, cell.y - 1].IsBlocked && heatMap[cell.x, cell.y - 1] == -1)
             {
                 heatMap[cell.x, cell.y - 1] = cost;

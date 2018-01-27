@@ -37,6 +37,7 @@ public class EnemyController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        Debug.Log(currentBehaviour);
         if (m_myTurn)
         {
             switch (currentBehaviour)
@@ -45,7 +46,7 @@ public class EnemyController : MonoBehaviour {
                     break;
                 case Behaviour.Roam:
                     float random = UnityEngine.Random.value;
-                    if(random <Constants.ROAM_MOVE_CHANCE)
+                    if(random < Constants.ROAM_MOVE_CHANCE)
                     {                        
                         Vector2 dir = UnityEngine.Random.insideUnitCircle.normalized;
                         m_movingEntity.Move(dir);
@@ -58,6 +59,46 @@ public class EnemyController : MonoBehaviour {
                     }
                     break;
                 case Behaviour.Hunt:
+                    int[,] heatMap = World.Instance.GetHeatMap();
+                    int x = -1;
+                    int y = -1;
+                    m_actor.Entity.GetPosition(out x, out y);
+
+                    int xm = heatMap.GetLength(0);
+                    int ym = heatMap.GetLength(1);
+
+                    int xt = -1;
+                    int yt = -1;
+                    int cost = int.MaxValue;
+
+                    if (x + 1 < xm && heatMap[x + 1, y] < cost && -1 < heatMap[x + 1, y])
+                    {
+                        cost = heatMap[x + 1, y];
+                        xt = 1;
+                        yt = 0;
+                    }
+                    if (y + 1 < ym && heatMap[x, y + 1] < cost && -1 < heatMap[x, y + 1])
+                    {
+                        cost = heatMap[x, y + 1];
+                        xt = 0;
+                        yt = 1;
+                    }
+                    if (-1 < x - 1 && heatMap[x - 1, y] < cost && -1 < heatMap[x - 1, y])
+                    {
+                        cost = heatMap[x - 1, y];
+                        xt = -1;
+                        yt = 0;
+                    }
+                    if (-1 < x - 1 && heatMap[x, y - 1] < cost && -1 < heatMap[x, y - 1])
+                    {
+                        cost = heatMap[x, y - 1];
+                        xt = 0;
+                        yt = -1;
+                    }
+                    
+                    m_movingEntity.Move(new Vector2(xt, yt));
+                    Synchronizer.Continue(m_actor, m_movingEntity.moveActionCost);
+
                     break;
             }
         }
