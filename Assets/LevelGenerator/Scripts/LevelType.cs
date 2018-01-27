@@ -6,6 +6,9 @@ using System.Text;
 
 public enum LevelType
 {
-
+    None,
+    Ambush,
+    Artifact,
+    Energy
 }
 

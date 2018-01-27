@@ -14,7 +14,7 @@ public class LevelGodish : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            FindObjectOfType<LevelBuilder>().Generate();
+            FindObjectOfType<LevelBuilder>().Generate(LevelType.Artifact);
         }
 
 	}

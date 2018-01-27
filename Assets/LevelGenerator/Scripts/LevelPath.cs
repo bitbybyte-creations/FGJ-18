@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+[System.Serializable]
 public struct LevelPoint
 {
     public int X;
     public int Y;
+
 }
 
 
@@ -21,6 +23,8 @@ public class LevelPath
     private int m_levelHeigth;
 
     private static Random Rand = new Random();
+
+    private LevelPoint[] m_points = null;
 
     public LevelPath(int startX, int startY, int minSize, int maxSize, int levelWith, int levelHeigth)
     {
@@ -72,6 +76,13 @@ public class LevelPath
     }
     public LevelPoint[] RunPath()
     {
+
+
+        if(m_points != null)
+        {
+            return m_points;
+        }
+
         changeDirection();
         int len = Rand.Next(m_minSize, m_maxSize);
 
@@ -99,7 +110,7 @@ try_again:
             }
 
         }
-
+        m_points = path;
         return path;
     }
 
