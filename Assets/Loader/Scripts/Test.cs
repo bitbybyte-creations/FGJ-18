@@ -8,6 +8,7 @@ public class Test : MonoBehaviour {
     void Start () {
 
         World.Instance.InitTest().Draw();
+        
     }
 
 

@@ -74,6 +74,76 @@ public class Player : Entity
         Stats = stats;
     }
 
+    public new void Move(int x, int y)
+    {
+        base.Move(x, y);
+        GenerateHeatMap(x, y);
+    }
+
+    public int[,] GenerateHeatMap(int x, int y)
+    {
+        World w = World.Instance;
+        World.Cell[,] c = w.GetGrid().GetCells();
+
+        int[,] heatMap = new int[c.GetLength(0), c.GetLength(1)];
+        for (int i = 0; i < c.GetLength(0); i++)
+            for (int j = 0; j < c.GetLength(1); j++)
+                heatMap[i, j] = -1;
+
+        Queue<Pos> queue = new Queue<Pos>();
+        Pos pos = new Pos(x, y);
+        queue.Enqueue(pos);
+        heatMap[pos.x, pos.y] = 0; ;
+        int xm = c.GetLength(0);
+        int ym = c.GetLength(1);
+
+        while (queue.Count > 0)
+        {
+            Pos cell = queue.Dequeue();
+            Debug.Log(cell.x + " " + cell.y);
+            int cost = heatMap[cell.x, cell.y] + 1;
+            Debug.Log(cell.x + 1 < xm && !c[cell.x + 1, cell.y].IsBlocked && heatMap[cell.x + 1, cell.y] == -1);
+            if (cell.x + 1 < xm && !c[cell.x + 1, cell.y].IsBlocked && heatMap[cell.x + 1, cell.y] == -1)
+            {
+                heatMap[cell.x + 1, cell.y] = cost;
+                queue.Enqueue(new Pos(cell.x + 1, cell.y));
+            }
+            Debug.Log(cell.y + 1 < ym && !c[cell.x, cell.y + 1].IsBlocked && heatMap[cell.x, cell.y + 1] == -1);
+            if (cell.y + 1 < ym && !c[cell.x, cell.y + 1].IsBlocked && heatMap[cell.x, cell.y + 1] == -1)
+            {
+                heatMap[cell.x, cell.y + 1] = cost;
+                queue.Enqueue(new Pos(cell.x, cell.y + 1));
+            }
+            Debug.Log(!(cell.x - 1 < 0) && !c[cell.x - 1, cell.y].IsBlocked && heatMap[cell.x - 1, cell.y] == -1);
+            if (!(cell.x - 1 < 0) && !c[cell.x - 1, cell.y].IsBlocked && heatMap[cell.x - 1, cell.y] == -1)
+            {
+                heatMap[cell.x - 1, cell.y] = cost;
+                queue.Enqueue(new Pos(cell.x - 1, cell.y));
+            }
+            Debug.Log(!(cell.y - 1 < 0) && !c[cell.x, cell.y - 1].IsBlocked && heatMap[cell.x, cell.y - 1] == -1);
+            if (!(cell.y - 1 < 0) && !c[cell.x, cell.y - 1].IsBlocked && heatMap[cell.x, cell.y - 1] == -1)
+            {
+                heatMap[cell.x, cell.y - 1] = cost;
+                queue.Enqueue(new Pos(cell.x, cell.y - 1));
+            }
+        }
+
+        w.SetHeatMap(heatMap);
+        return heatMap;
+    }
+
+    class Pos
+    {
+        public int x;
+        public int y;
+
+        public Pos(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
 }
 
 public class Monster : Entity
