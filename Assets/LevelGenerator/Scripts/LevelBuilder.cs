@@ -27,6 +27,7 @@ public class LevelBuilder : MonoBehaviour {
     public LevelBuildMode BuildMode = LevelBuildMode.FollowAndContinue;
 
     public LevelPoint StartPoint;
+    public LevelPoint EndPoint;
     public LevelPoint ObjectivePoint;
 
 
@@ -286,6 +287,22 @@ public class LevelBuilder : MonoBehaviour {
 
     }
 
+    private void generateEndPoint()
+    {
+
+        while (true)
+        {
+            EndPoint = FourCorners[Random.Range(0, 4)];
+
+            if (!EndPoint.Equals(StartPoint))
+            {
+                break;
+            }
+
+        }
+
+    }
+
     public void Generate()
     {
         char[,] worldData = new char[LevelWidth,LevelHeigth];
@@ -302,6 +319,7 @@ public class LevelBuilder : MonoBehaviour {
         {
             StartPoint = FourCorners[Random.Range(0, 4)];
             generateObjectivePoint();
+            generateEndPoint();
         }
 
         EnemySpawnPoints = new LevelPoint[Random.Range(MinEnemySpawnCount, MaxEnemySpawnCount)];
