@@ -1,14 +1,55 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MovingEntity : MonoBehaviour {
 
+    public class MoveResult
+    {
+        public enum ResultValue
+        {
+            Ok,
+            TileBlocked,
+            TileOccupied
+        }
+        private ResultValue m_result;
+        private World.Cell m_cell;
+        public int m_x, m_y;
+        public MoveResult(ResultValue result, World.Cell cell, int x, int y)
+        {
+            m_result = result;
+            m_cell = cell;
+            m_x = x;
+            m_y = y;
+        }
+        public World.Cell Cell
+        {
+            get
+            {
+                return m_cell;
+            }
+        }
 
+        public ResultValue Result
+        {
+            get
+            {
+                return m_result;
+            }
+        }
+        public void GetPosition(out int x, out int y)
+        {
+            x = m_x;
+            y = m_y;
+        }
+
+    }
+    
     //public float moveSpeed = 1f;
     //private float m_remainingMove = 0f;
     public int moveActionCost = 10;
-    private Vector2 m_moveGoal;
+    //private Vector2 m_moveGoal;
     private SynchronizedActor m_syncActor;
 
     public class SyncMoveAction : SynchronizedActor.SyncAction
@@ -44,11 +85,12 @@ public class MovingEntity : MonoBehaviour {
     {
         get
         {
-            return m_moveGoal;
+            return m_syncActor.Entity.GetPositionVector();
         }
         set
         {
-            m_moveGoal = value;            
+            int x, y;
+            m_syncActor.Entity.Move((int)value.x, (int)value.y);
         }
     }
 
@@ -58,49 +100,70 @@ public class MovingEntity : MonoBehaviour {
         m_syncActor = GetComponent<SynchronizedActor>();
         if (m_syncActor == null)
             m_syncActor = gameObject.AddComponent<SynchronizedActor>();
-
-        resetGoal();
 	}
 
-    private void resetGoal()
-    {
-        m_moveGoal = MapPosition;
-    }
+    //private void resetGoal()
+    //{
+    //    m_moveGoal = MapPosition;
+    //}
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.DrawLine(transform.position, new Vector3(m_moveGoal.x+xz_offset, 0f, m_moveGoal.y+xz_offset), Color.blue);
+        Debug.DrawLine(transform.position, new Vector3(MoveGoal.x+xz_offset, 0f, MoveGoal.y+xz_offset), Color.blue);
     }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="direction">as map direction not unity direction</param>
-    public void Move(Vector2 direction)
+    public MoveResult Move(Vector2 direction)
     {        
         //float move = m_remainingMove + moveSpeed;
         //m_remainingMove = move - (Mathf.Abs(move));
 
         Debug.Log("Position on Map: " + MapPosition +", Position on World: "+transform.position);
+        Debug.Log("Move Input Direction: " + direction);
 
-        Vector2 d = Vector2.zero;
         float absX = Mathf.Abs(direction.x);
         float absY = Mathf.Abs(direction.y);
-        float rand = Random.value;
+        float rand = UnityEngine.Random.value;
+        int x, y;
 
         if (absX > absY || (absX == absY && rand < 0.5f))
         {
-            d = new Vector2(Mathf.Sign(direction.x),0f);
+            x = Math.Sign(direction.x);
+            y = 0;
         }
         else
         {
-            d = new Vector2(0f, Mathf.Sign(direction.y));
-        }        
+            x = 0;
+            y = Math.Sign(direction.y);
+        }
 
-
-        Debug.Log("Move Direction: " + d);
-
-        MoveGoal += d;
-        m_syncActor.AssignAction(new SyncMoveAction(transform, MoveGoal));
+        MoveResult result;        
+        Vector2 targetPosition = MoveGoal + new Vector2(x, y);
+        x = (int)targetPosition.x;
+        y = (int)targetPosition.y;
+        World.Cell cell = World.Instance.GetGrid().GetCell(x,y);
+        Debug.Log("Cell at " + targetPosition+":  " + cell.ToString());
+        if (cell.IsBlocked)
+        {
+            Debug.Log("Cell Blocked");
+            result = new MoveResult(MoveResult.ResultValue.TileBlocked, cell, x, y);
+        }
+        else if (cell.ContainsEntity)
+        {
+            Debug.Log("Cell Occupied");
+            result = new MoveResult(MoveResult.ResultValue.TileOccupied, cell, x, y);
+        }
+        else
+        {
+            Debug.Log("Move OK");
+            result = new MoveResult(MoveResult.ResultValue.Ok, cell, x, y);
+            MoveGoal = targetPosition;
+            m_syncActor.AssignAction(new SyncMoveAction(transform, MoveGoal));
+        }
+        return result;
+        
     }
 }

@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class World
 {
+    private static event System.Action<World> OnWorldInitializedEvent;
+
+    private bool _init = false;
     private static World _world;
     private Grid _grid;
 
     private World()
     {
-        
+
     }
 
     public static World GetInstance()
@@ -30,13 +33,13 @@ public class World
     public World InitTest()
     {
         Map map = Loader.LoadMap();
-        _grid = new Grid(map);
-        return _world;
+        return Init(map);
     }
 
     public World Init(Map map)
     {
         _grid = new Grid(map);
+        _init = true;
         return this;
     }
     public void InitMap(Map map)
@@ -44,18 +47,60 @@ public class World
         _grid = new Grid(map);
     }
 
+    public static void OnWorldInitialized(System.Action<World> action)
+    {
+        if (_world != null && _world._init)
+        {
+            action(_world);
+        }
+        else
+        {
+            OnWorldInitializedEvent += action;
+        }
+    }
 
     public void Draw()
     {
-        foreach(Cell c in _grid.GetCells())
+        foreach (Cell c in _grid.GetCells())
         {
             c.DrawTiles();
         }
+        Debug.Log("World Initialized");
+        if (OnWorldInitializedEvent != null)
+        {
+            OnWorldInitializedEvent(this);
+        }
+        int x = _grid.GetCells().GetLength(0);
+        int y = _grid.GetCells().GetLength(1);
+        CreateFloorCollider(x, y);
     }
 
     public Grid GetGrid()
     {
         return _grid;
+    }
+
+    public GameObject CreateFloorCollider(int x, int y)
+    {
+        Mesh m = new Mesh();
+        m.name = "floor_collider";
+        m.SetVertices(
+            new List<Vector3> {
+                new Vector3(-1, 0.01f, -1),
+                new Vector3(-1, 0.01f, y),
+                new Vector3(x, 0.01f, -1),
+                new Vector3(x , 0.01f, y)
+            });
+        m.triangles = new int[] { 0, 1, 2, 2, 1, 3 };
+        m.RecalculateNormals();
+
+        GameObject plane = new GameObject("plane");
+        MeshFilter mf = (MeshFilter)plane.AddComponent(typeof(MeshFilter));
+        mf.mesh = m;
+        MeshRenderer rend = plane.AddComponent(typeof(MeshRenderer)) as MeshRenderer;
+        MeshCollider col = plane.AddComponent(typeof(MeshCollider)) as MeshCollider;
+
+        return plane;
     }
 
     public class Cell
@@ -77,20 +122,20 @@ public class World
 
         public void DrawTiles()
         {
-            foreach(Tile t in _tiles)
+            foreach (Tile t in _tiles)
             {
                 t.Draw();
             }
         }
 
-        public bool IsBlocked()
+        public bool IsBlocked
         {
-            return _blocked;
-        }
+            get { return _blocked; }
+            set
+            {
+                _blocked = value;
+            }
 
-        public void SetBlocked(bool blocked)
-        {
-            _blocked = blocked;
         }
         public List<Tile> GetTiles()
         {
@@ -101,9 +146,12 @@ public class World
             return _items;
         }
 
-        public bool ContainsEntity()
+        public bool ContainsEntity
         {
-            return _items != null;
+            get
+            {
+                return _entity != null;
+            }
         }
 
         public Entity GetEntity()
@@ -120,6 +168,16 @@ public class World
         {
             _tiles.Add(new Tile(type, new Vector3(x, 0, y), new Vector3(0, rot, 0)));
         }
+
+        public override string ToString()
+        {
+            string output = "Cell:\nItems: "+_items.Count;            
+            output += "\nTiles: "+_tiles.Count;
+            output += "\nEntity: " + (_entity != null ? _entity.Actor.name : "null");
+            output += "\nBlocked: " + IsBlocked;
+
+            return output;
+        }
     }
 
     public class Grid
@@ -130,7 +188,7 @@ public class World
         {
             _grid = new Cell[map.X, map.Y];
 
-            for(int x = 0; x < map.X; x++)
+            for (int x = 0; x < map.X; x++)
             {
                 for (int y = 0; y < map.Y; y++)
                 {
@@ -149,7 +207,7 @@ public class World
                             break;
                         case '_':
                             c.AddTile(Tile.Set.FLOOR, x, y, 0);
-                            c.SetBlocked(false);
+                            c.IsBlocked = false;
                             break;
                         case '7':
                             c.AddTile(Tile.Set.CORNER, x, y, 270);

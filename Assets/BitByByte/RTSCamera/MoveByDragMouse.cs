@@ -6,7 +6,8 @@ namespace BitByByte.Camera
 {
     public class MoveByDragMouse : MonoBehaviour
     {
-        public float speed = 10f;
+        public float speed;
+        public float distanceMultiplier = 10f;
         private bool m_dragging;
         private Vector3 m_startPosition;
         private Vector3 m_startCursorPosition;
@@ -49,7 +50,8 @@ namespace BitByByte.Camera
         {
             Vector2 mouseDelta = Input.mousePosition - m_startCursorPosition;
             Vector3 moveDelta = (transform.right * mouseDelta.x + transform.forward * mouseDelta.y) * -1f;
-            transform.position = moveDelta * Time.deltaTime * speed + m_startPosition;
+            Vector3 pos = moveDelta * Time.deltaTime * distanceMultiplier + m_startPosition;
+            transform.Translate((pos - transform.position) * Time.deltaTime * speed);
         }
     }
 }

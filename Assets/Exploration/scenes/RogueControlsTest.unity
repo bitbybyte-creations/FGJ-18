@@ -225,7 +225,7 @@ MonoBehaviour:
   prefab: {fileID: 1696795042462732, guid: c1f5cb8bbb5fe294ab4234d1f8bf6c5f, type: 2}
   xPosition: 0
   yPosition: 0
-  heightOffset: 1
+  heightOffset: 0
   spawnCount: 1
   maxXPosition: 63
   maxYPosition: 63
@@ -256,7 +256,7 @@ MonoBehaviour:
   prefab: {fileID: 1984132612513966, guid: e0725933425ccf347a37a1bb9356e42e, type: 2}
   xPosition: 0
   yPosition: 0
-  heightOffset: 1
+  heightOffset: 0
   spawnCount: 10
   maxXPosition: 63
   maxYPosition: 63
@@ -269,6 +269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1344011890}
   - component: {fileID: 1344011891}
+  - component: {fileID: 1344011892}
   m_Layer: 0
   m_Name: CameraParent
   m_TagString: Untagged
@@ -302,6 +303,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+--- !u!114 &1344011892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1344011889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a471f3ae4882cab4bb7eb7dcf22c5d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  offset: {x: 0, y: 0, z: -16}
 --- !u!1 &1549744443
 GameObject:
   m_ObjectHideFlags: 0

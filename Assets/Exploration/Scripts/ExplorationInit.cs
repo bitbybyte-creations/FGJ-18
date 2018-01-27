@@ -13,6 +13,8 @@ public class ExplorationInit : MonoBehaviour
         Invoke("Init", 2f);
     }
 
+    
+
     public void Init()
     {
         
