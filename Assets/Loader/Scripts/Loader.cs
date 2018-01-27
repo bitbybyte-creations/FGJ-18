@@ -8,15 +8,20 @@ public class Loader {
     {
         char[,] tiles = new char[,] {
             { '#','_','_','#','#','#','#','#' },
-            { '#','_','_','#','/','_','\\','#' },
+            { '#','_','_','#','7','_','9','#' },
             { '#','_','_','#','_','_','_','#' },
             { '#','_','_','#','_','_','_','#' },
-            { '#','_','_','#','c','_','%','#' },
-            { '#','_','_','#','#','_','#','#' },
+            { '#','_','_','#','1','_','3','#' },
+            { '7','_','_','9','#','_','#','#' },
             { '_','_','_','_','_','_','_','_' },
-            { '#','_','_','#','#','#','#','#' },
+            { '1','_','_','3','#','#','#','#' },
         };
-        return new Map(8, 8, tiles);
+        tiles = new char[,] {
+            { '7','#','9' },
+            { '#','#','#' },
+            { '1','#','3' }
+        };
+        return new Map(tiles);
     }
 }
 
@@ -26,10 +31,10 @@ public class Map
     public readonly int Y;
     private char[,] _tiles;
 
-    public Map(int x, int y, char[,] tiles)
+    public Map(char[,] tiles)
     {
-        X = x;
-        Y = y;
+        X = tiles.GetLength(0);
+        Y = tiles.GetLength(1);
         _tiles = tiles;
     }
 
@@ -40,6 +45,10 @@ public class Map
 
     public char GetTile(int x, int y)
     {
+        Debug.LogError(_tiles.GetLength(0) + " " + x);
+        Debug.LogError(_tiles.GetLength(1) + " " + y);
+        if (x < 0 || y < 0 || x > _tiles.GetLength(0) - 1 || y > _tiles.GetLength(1) - 1)
+            return '#';
         return _tiles[x, y];
     }
 }
