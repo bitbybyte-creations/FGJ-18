@@ -61,4 +61,23 @@ public class EnemyController : MonoBehaviour {
             }
         }
 	}
+
+    private void GenerateMap()
+    {
+        World w = World.Instance;
+        Vector2 pp = w.GetPlayerPosition();
+
+        World.Cell[,] c = w.GetGrid().GetCells();
+
+        int[,] heatMap = new int[c.GetLength(0), c.GetLength(1)];
+
+        Queue<Vector2> queue = new Queue<Vector2>();
+        queue.Enqueue(pp);
+
+        while(queue.Count > 0)
+        {
+            Vector2 cell = queue.Dequeue();
+
+        }
+    }
 }
