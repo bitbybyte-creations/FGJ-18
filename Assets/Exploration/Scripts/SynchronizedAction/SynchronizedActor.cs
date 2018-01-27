@@ -23,6 +23,21 @@ public class SynchronizedActor : MonoBehaviour {
     {
         public abstract void Execute();
     }
+    public class IdleAction : SyncAction
+    {
+        private SynchronizedActor m_actor;
+        private int m_idleDuration;
+        public IdleAction(SynchronizedActor actor, int timeStep)
+        {
+            m_actor = actor;
+            m_idleDuration = timeStep;
+        }
+        public override void Execute()
+        {
+            
+        }
+    }
+
 
     private SyncAction m_next;
 

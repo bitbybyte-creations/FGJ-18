@@ -64,9 +64,10 @@ public class Synchronizer
 
     internal static void Continue(SynchronizedActor actor, int actionCost)
     {
-        Debug.Log(actor.name + " Action Complete");
+        
         actor.ActionTime += actionCost;
         actor.EndTurn();
+        Debug.Log(actor.name + " Action Complete, Next Action Time: "+actor.ActionTime);
         SynchronizedActor next = Instance.GetNextActorTurn();
         int count = 100;
         while (next == null && count > 0)
@@ -79,6 +80,7 @@ public class Synchronizer
             Debug.LogError("Continue Loop Timeout!");
         else
         {
+            Debug.Log("Giving Turn to " + next.name);
             next.GiveTurn();
         }
 
@@ -103,8 +105,9 @@ public class Synchronizer
     {
         foreach (SynchronizedActor a in m_actorList)
         {
+            Debug.Log(a.name + " AT: " + a.ActionTime + " vs. " + m_time);
             if (a.ActionTime <= m_time)
-            {
+            {                
                 return a;
             }
         }
