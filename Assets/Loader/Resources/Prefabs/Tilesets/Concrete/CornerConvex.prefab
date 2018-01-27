@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33057801323594510}
   - component: {fileID: 23233162718871158}
   m_Layer: 0
-  m_Name: Corner
+  m_Name: CornerConvex
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,4 +81,4 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1204978770912328}
-  m_Mesh: {fileID: 4300008, guid: 0a13d22f1fba34d419fd7c9e0fc1609b, type: 3}
+  m_Mesh: {fileID: 4300014, guid: 0a13d22f1fba34d419fd7c9e0fc1609b, type: 3}

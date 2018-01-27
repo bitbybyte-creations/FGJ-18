@@ -183,7 +183,7 @@ public class World
     public class Grid
     {
         Cell[,] _grid;
-
+        
         public Grid(Map map)
         {
             _grid = new Cell[map.X, map.Y];
@@ -200,16 +200,16 @@ public class World
                             if('#'.Equals(map.GetTile(x + 1, y)) && '#'.Equals(map.GetTile(x - 1, y)))
                             {
                                 if('_'.Equals(map.GetTile(x, y + 1)))
-                                    c.AddTile(Tile.Set.WALL, x, y, 180);
+                                    c.AddTile((Random.Range(0f, 1f) < 0.9f ? Tile.Set.WALL : Tile.Set.WALL_SEC), x, y, 180);
                                 if('_'.Equals(map.GetTile(x, y - 1)))
-                                    c.AddTile(Tile.Set.WALL, x, y, 0);
+                                    c.AddTile((Random.Range(0f, 1f) < 0.9f ? Tile.Set.WALL : Tile.Set.WALL_SEC), x, y, 0);
                             }
                             else if ('#'.Equals(map.GetTile(x, y + 1)) && '#'.Equals(map.GetTile(x, y - 1)))
                             {
                                 if ('_'.Equals(map.GetTile(x + 1, y)))
-                                    c.AddTile(Tile.Set.WALL, x, y, 270);
+                                    c.AddTile((Random.Range(0f, 1f) < 0.9f ? Tile.Set.WALL : Tile.Set.WALL_SEC), x, y, 270);
                                 if ('_'.Equals(map.GetTile(x - 1, y)))
-                                    c.AddTile(Tile.Set.WALL, x, y, 90);
+                                    c.AddTile((Random.Range(0f, 1f) < 0.9f ? Tile.Set.WALL : Tile.Set.WALL_SEC), x, y, 90);
                             }
 
                             //concave
@@ -257,20 +257,6 @@ public class World
                             c.AddTile(Tile.Set.FLOOR, x, y, 0);
                             c.IsBlocked = false;
                             break;
-
-
-                        //case '7':
-                        //    c.AddTile(Tile.Set.CORNER, x, y, 270);
-                        //    break;
-                        //case '9':
-                        //    c.AddTile(Tile.Set.CORNER, x, y, 0);
-                        //    break;
-                        //case '3':
-                        //    c.AddTile(Tile.Set.CORNER, x, y, 90);
-                        //    break;
-                        //case '1':
-                        //    c.AddTile(Tile.Set.CORNER, x, y, 180);
-                        //    break;
                     }
                     _grid[x, y] = c;
                 }
@@ -309,6 +295,7 @@ public class World
 
             public static string FLOOR { get { return GetSet() + "Floor"; } }
             public static string WALL = GetSet() + "Wall";
+            public static string WALL_SEC = GetSet() + "WallSec";
             public static string CORNER_CAVE = GetSet() + "CornerConcave";
             public static string CORNER_CVEX = GetSet() + "CornerConvex";
 
