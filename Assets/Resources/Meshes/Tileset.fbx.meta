@@ -18,6 +18,7 @@ ModelImporter:
     100020: CornerConcave
     100022: WallSec
     100024: CornerConvex
+    100026: CornerSharp
     400000: Cube
     400002: Mesh
     400004: //RootNode
@@ -31,6 +32,7 @@ ModelImporter:
     400020: CornerConcave
     400022: WallSec
     400024: CornerConvex
+    400026: CornerSharp
     2000000: Camera
     2100000: Default
     2300000: Cube
@@ -42,6 +44,7 @@ ModelImporter:
     2300012: CornerConcave
     2300014: WallSec
     2300016: CornerConvex
+    2300018: CornerSharp
     3300000: Cube
     3300002: //RootNode
     3300004: Floor
@@ -51,6 +54,7 @@ ModelImporter:
     3300012: CornerConcave
     3300014: WallSec
     3300016: CornerConvex
+    3300018: CornerSharp
     4300000: Cube
     4300002: Floor
     4300004: Wall
@@ -59,6 +63,7 @@ ModelImporter:
     4300010: CornerConcave
     4300012: WallSec
     4300014: CornerConvex
+    4300016: CornerSharp
     7400000: Take 001
     9500000: //RootNode
     10800000: Directional Light
@@ -115,7 +120,7 @@ ModelImporter:
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
-    tangentImportMode: 3
+    tangentImportMode: 0
     normalCalculationMode: 4
   importAnimation: 0
   copyAvatar: 0
