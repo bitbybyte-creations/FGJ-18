@@ -39,6 +39,10 @@ public class World
         _grid = new Grid(map);
         return this;
     }
+    public void InitMap(Map map)
+    {
+        _grid = new Grid(map);
+    }
 
 
     public void Draw()
@@ -115,7 +119,10 @@ public class World
         {
             _blocked = blocked;
         }
-
+        public List<Tile> GetTiles()
+        {
+            return _tiles;
+        }
         public List<Item> GetItems()
         {
             return _items;
@@ -241,6 +248,11 @@ public class World
             _type = type;
             _pos = pos;
             _rot = rot;
+        }
+
+        public GameObject GetGO()
+        {
+            return _go;
         }
 
         public void Draw()
