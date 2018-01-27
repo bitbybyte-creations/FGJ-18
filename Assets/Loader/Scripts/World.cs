@@ -252,6 +252,28 @@ public class World
                                     c.AddTile(Tile.Set.CORNER_CVEX, x, y, 0);
                             }
 
+                            //sharp corner
+                            if ('#'.Equals(map.GetTile(x + 1, y)) &&
+                                '_'.Equals(map.GetTile(x - 1, y)) &&
+                                '_'.Equals(map.GetTile(x, y + 1)) &&
+                                '_'.Equals(map.GetTile(x, y - 1)))
+                                c.AddTile(Tile.Set.CORNER_SHARP, x, y, 0);
+                            if ('_'.Equals(map.GetTile(x + 1, y)) &&
+                                '#'.Equals(map.GetTile(x - 1, y)) &&
+                                '_'.Equals(map.GetTile(x, y + 1)) &&
+                                '_'.Equals(map.GetTile(x, y - 1)))
+                                c.AddTile(Tile.Set.CORNER_SHARP, x, y, 180);
+                            if ('_'.Equals(map.GetTile(x + 1, y)) &&
+                                '_'.Equals(map.GetTile(x - 1, y)) &&
+                                '#'.Equals(map.GetTile(x, y + 1)) &&
+                                '_'.Equals(map.GetTile(x, y - 1)))
+                                c.AddTile(Tile.Set.CORNER_SHARP, x, y, 270);
+                            if ('_'.Equals(map.GetTile(x + 1, y)) &&
+                                '_'.Equals(map.GetTile(x - 1, y)) &&
+                                '_'.Equals(map.GetTile(x, y + 1)) &&
+                                '#'.Equals(map.GetTile(x, y - 1)))
+                                c.AddTile(Tile.Set.CORNER_SHARP, x, y, 90);
+
                             break;
                         case '_':
                             c.AddTile(Tile.Set.FLOOR, x, y, 0);
@@ -298,6 +320,7 @@ public class World
             public static string WALL_SEC = GetSet() + "WallSec";
             public static string CORNER_CAVE = GetSet() + "CornerConcave";
             public static string CORNER_CVEX = GetSet() + "CornerConvex";
+            public static string CORNER_SHARP = GetSet() + "CornerSharp";
 
         }
 
