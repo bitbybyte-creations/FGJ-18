@@ -307,16 +307,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelWidth: 100
   LevelHeigth: 100
-  MaxPathLen: 30
-  MinPathLen: 15
-  MaxPaths: 40
-  MinPaths: 20
-  MaxEnemySpawnCount: 50
-  MinEnemySpawnCount: 50
+  MaxPathLen: 80
+  MinPathLen: 80
+  MaxPaths: 4
+  MinPaths: 4
+  MaxEnemySpawnCount: 10
+  MinEnemySpawnCount: 5
   EnemyMinDistance: 10
   MinObjectiveDistance: 20
   LevelType: 2
-  BuildMode: 2
+  BuildMode: 1
   StartPoint:
     X: 0
     Y: 0
