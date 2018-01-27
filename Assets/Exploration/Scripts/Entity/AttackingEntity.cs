@@ -105,7 +105,8 @@ public class AttackingEntity : MonoBehaviour
             Miss,
             OutOfRange,
             OutOfSight,
-            NoTarget
+            NoTarget,
+            NoEnergy
         }
 
         public AttackResult(ResultValue result, Weapon weapon)
@@ -135,6 +136,13 @@ public class AttackingEntity : MonoBehaviour
     //{
 
     //}
+
+    public AttackResult Attack(Entity entity)
+    {
+        int x, y;
+        entity.GetPosition(out x, out y);
+        return Attack(x, y);
+    }
 
     public AttackResult Attack(int x, int y)
     {
@@ -185,6 +193,7 @@ public class AttackingEntity : MonoBehaviour
             else
             {
                 Debug.Log("Out of Energy");
+                result = new AttackResult(AttackResult.ResultValue.NoEnergy, wep);
             }
         }
 

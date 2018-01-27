@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour {
 
     public class Constants
     {
-        public const float ROAM_MOVE_CHANCE = 0.50f;
+        public const float ROAM_MOVE_CHANCE = 0.25f;
         public const int DEFAULT_IDLE_DURATION = 10;
     }
 
@@ -54,6 +54,7 @@ public class EnemyController : MonoBehaviour {
                     else
                     {
                         m_actor.AssignAction(new SynchronizedActor.IdleAction(m_actor, Constants.DEFAULT_IDLE_DURATION));
+                        Synchronizer.Continue(m_actor, Constants.DEFAULT_IDLE_DURATION);
                     }
                     break;
                 case Behaviour.Hunt:
