@@ -97,7 +97,7 @@ public class World
         GameObject plane = new GameObject("plane");
         MeshFilter mf = (MeshFilter)plane.AddComponent(typeof(MeshFilter));
         mf.mesh = m;
-        MeshRenderer rend = plane.AddComponent(typeof(MeshRenderer)) as MeshRenderer;
+        //MeshRenderer rend = plane.AddComponent(typeof(MeshRenderer)) as MeshRenderer;
         MeshCollider col = plane.AddComponent(typeof(MeshCollider)) as MeshCollider;
 
         return plane;
