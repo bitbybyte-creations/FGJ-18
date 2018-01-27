@@ -313,9 +313,12 @@ MonoBehaviour:
   MinEnemySpawnCount: 5
   EnemyMinDistance: 10
   MinObjectiveDistance: 20
-  LevelType: 1
-  BuildMode: 1
+  LevelType: 2
+  BuildMode: 2
   StartPoint:
+    X: 0
+    Y: 0
+  EndPoint:
     X: 0
     Y: 0
   ObjectivePoint:
