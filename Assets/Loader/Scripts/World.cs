@@ -76,15 +76,6 @@ public class World
         CreateFloorCollider(x, y);
     }
 
-    //public Vector2 GetPlayerPosition()
-    //{
-    //    foreach (Cell c in _grid.GetCells())
-    //        if (c.ContainsEntity && c.GetEntity().GetType() == typeof(Player))
-    //            return c.GetEntity().GetPositionVector();
-    //
-    //    return Vector2.negativeInfinity;
-    //}
-
     public void SetHeatMap(int[,] hate)
     {
         _heatMap = hate;
