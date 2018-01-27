@@ -14,6 +14,10 @@ public class World
         Map map = Loader.LoadMap();
         _grid = new Grid(map);
     }
+    public World(Map map)
+    {
+        _grid = new Grid(map);
+    }
 
     public void Draw()
     {

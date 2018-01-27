@@ -25,6 +25,18 @@ public class Loader {
         //};
         return new Map(tiles);
     }
+    public static Map LoadFloorTileMap(int size)
+    {
+        char[,] tiles = new char[size, size];
+        for (int i = 0; i<size;i++)
+        {
+            for (int j=0; j<size;j++)
+            {
+                tiles[i, j] = '_';
+            }
+        }
+        return new Map(tiles);
+    }
 }
 
 public class Map
