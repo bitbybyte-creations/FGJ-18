@@ -16,7 +16,7 @@ public class IntroManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+        WorldMapController.instance_.energy = 100f;
         pingAnimator_.SetTrigger("Ping");
         textWriter_.Write(textWritten_, true, false);
         startButton_.onClick.AddListener(()=>StartGameAnim());

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.SceneManagement;
 
 public class ExplorationInit : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class ExplorationInit : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Cursor.visible = true;
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(WorldMapController.currentSceneName_));
         //Map map = Loader.LoadFloorTileMap(64);
         //map.GetTiles()[32, 32] = '#';
         //World.Instance.Init(map).Draw();
@@ -59,6 +62,17 @@ public class ExplorationInit : MonoBehaviour
         GetComponent<PlayerUI>().Init();
         if (OnInitEvent != null)
             OnInitEvent();
+
+        PlayerControls c = Synchronizer.Instance.Player.GetComponent<PlayerControls>();
+        ReturnToWorldMap m = GetComponent<ReturnToWorldMap>();
+        c.OnPlayerMovedToEndEvent += m.FinishScene;
+        c.OnPlayerMovedToObjectiveEvent += delegate {
+            m.AddEnergy(UnityEngine.Random.Range(35f, 85f));
+            WorldMapController.instance_.typeWriter.Write("This is what I'm looking for! It's time to leave... fast...", true, false);
+        };
+        Synchronizer.Instance.Player.Entity.Stats.Energy = (int)WorldMapController.instance_.energy;
+        
+        
     }
 
 }

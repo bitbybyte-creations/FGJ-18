@@ -14,4 +14,4 @@ MonoBehaviour:
   id_: enemy_basic
   type_: 3000
   flavorText_: Something is moving.
-  sceneToLoad_: test_transition_scene
+  sceneToLoad_: Ambush1

@@ -29,6 +29,6 @@ public class GameOver : MonoBehaviour {
 
     public void LoadMainMenu()
     {
-        Debug.Log("TODO load intro level");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("mainmenu");
     }
 }

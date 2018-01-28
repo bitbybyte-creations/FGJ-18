@@ -14,4 +14,4 @@ MonoBehaviour:
   id_: energy_basic
   type_: 1000
   flavorText_: An energy signal.
-  sceneToLoad_: test_transition_scene
+  sceneToLoad_: Dungeon1

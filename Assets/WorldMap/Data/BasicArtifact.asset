@@ -14,4 +14,4 @@ MonoBehaviour:
   id_: artifact_basic
   type_: 2000
   flavorText_: Something odd. Worth the risk?
-  sceneToLoad_: test_transition_scene
+  sceneToLoad_: Dungeon1

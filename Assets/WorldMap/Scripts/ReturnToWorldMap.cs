@@ -11,6 +11,12 @@ public class ReturnToWorldMap : MonoBehaviour {
         Scene thisScene = SceneManager.GetSceneByName(WorldMapController.currentSceneName_);
         SceneManager.UnloadSceneAsync(thisScene);
 
+        SynchronizedActor sa = Synchronizer.Instance.Player;
+        if (sa != null)
+        {
+            WorldMapController.instance_.energy = (float)sa.Entity.Stats.Energy;
+        }
+
     }
 
     public void AddEnergy(float amount) {

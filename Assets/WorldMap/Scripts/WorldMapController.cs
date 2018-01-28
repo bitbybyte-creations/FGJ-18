@@ -121,7 +121,7 @@ public class WorldMapController : Object {
     public float AddEnergy {
         set {
             energy_ += value;
-        }
+        }        
     }
 
     void Start()

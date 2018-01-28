@@ -14,4 +14,4 @@ MonoBehaviour:
   id_: energy_end
   type_: 5000
   flavorText_: This is it. The source of the signal.
-  sceneToLoad_: test_transition_scene
+  sceneToLoad_: EndGame
