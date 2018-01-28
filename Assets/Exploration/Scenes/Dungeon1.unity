@@ -402,8 +402,6 @@ MonoBehaviour:
     type: 2}
   monsterPrefabs:
   - {fileID: 1899862524669692, guid: d289033b0e8f1a54db78040c166f7b2e, type: 2}
-  - {fileID: 1822390675987390, guid: 941a5ee9cfef6dc4baa2c170e6c97659, type: 2}
-  - {fileID: 1772536582349242, guid: 3c70f2982b3f0614796ffef7d0ff1df7, type: 2}
 --- !u!1 &1636513095
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,7 +424,7 @@ Light:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1636513095}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
@@ -462,13 +460,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1636513095}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.9414906, y: -0.057847448, z: 0.2522716, w: 0.21588965}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 154.17, y: -30, z: 0}
 --- !u!1 &1836447160
 GameObject:
   m_ObjectHideFlags: 0
