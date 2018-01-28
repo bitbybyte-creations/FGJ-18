@@ -12,4 +12,11 @@ public class ReturnToWorldMap : MonoBehaviour {
         SceneManager.UnloadSceneAsync(thisScene);
 
     }
+
+    public void AddEnergy(float amount) {
+
+        WorldMapController.instance_.AddEnergy = amount;
+
+    }
+
 }

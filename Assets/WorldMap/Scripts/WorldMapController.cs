@@ -205,7 +205,9 @@ public class WorldMapController : Object {
             //Add a little extra
             float currentCameraZoom = worldMapCamera.orthographicSize;
             float targetZoom = currentCameraZoom * 1.25f;
-            LeanTween.value(worldMapCamera.gameObject, SetCameraZoom, currentCameraZoom, targetZoom, .5f).setEase(LeanTweenType.easeOutQuad);
+            if (targetZoom < 10f) {
+                LeanTween.value(worldMapCamera.gameObject, SetCameraZoom, currentCameraZoom, targetZoom, .5f).setEase(LeanTweenType.easeOutQuad);
+            };
         }
     }
 
