@@ -11,3 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/WorldMap/worldmap-dev.unity
     guid: c82be8edda6a97645944c759eac0953b
+  - enabled: 1
+    path: Assets/WorldMap/test_transition_scene.unity
+    guid: 63ad98a1ae8889d42b5a8f749c8ac754

@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 1309d7fe3d157f345b4fbc1627aca5bf
+timeCreated: 1517136628
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: IosevkaCC
+  fontNames:
+  - IosevkaCC
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
