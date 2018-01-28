@@ -62,6 +62,7 @@ public class SynchronizedActor : MonoBehaviour {
     {
         public abstract void Execute();
     }
+
     public class IdleAction : SyncAction
     {
         private SynchronizedActor m_actor;
@@ -77,6 +78,11 @@ public class SynchronizedActor : MonoBehaviour {
         }
     }
 
+    public void SetVisible(bool visible)
+    {
+        MeshRenderer mr = GetComponentInChildren<MeshRenderer>();
+        mr.enabled = visible;
+    }
 
     private SyncAction m_next;
     private AttackingEntity m_attackingEntity;

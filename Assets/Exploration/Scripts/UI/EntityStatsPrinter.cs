@@ -60,6 +60,7 @@ public class EntityStatsPrinter : MonoBehaviour
 
     private void OnDisable()
     {
-        m_printer.SetActive(false);
+        if(m_printer != null)
+            m_printer.SetActive(false);
     }
 }

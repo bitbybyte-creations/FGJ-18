@@ -38,7 +38,11 @@ public class PlayerControls : MonoBehaviour
     private void actor_OnTurnStatusChange(bool hasTurn)
     {
         if (hasTurn)
+        {
             Debug.Log("Player gained turn");
+
+            ApplyLOS();
+        }
         else
         {
             Debug.Log("Player Turn End");
@@ -54,7 +58,6 @@ public class PlayerControls : MonoBehaviour
             World.Cell mouseOverCell = GetMouseOverCell();
             if (mouseOverCell != null && mouseOverCell.ContainsEntity)
             {
-                ApplyLOS();
                 int x, y;
                 Entity ent = mouseOverCell.GetEntity();
                 ent.GetPosition(out x, out y);
@@ -186,7 +189,7 @@ public class PlayerControls : MonoBehaviour
         {
             if (skipfirst)
             {
-                skipfirst = false;
+                skipfirst = false;  
             }
             else
             {
@@ -232,6 +235,8 @@ public class PlayerControls : MonoBehaviour
                     }
                 }
                 grid[xe, ye].SetVisible(visible);
+                if(a.isActiveAndEnabled)
+                    a.SetVisible(visible);
             }
         }
     }
