@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,6 +36,24 @@ public class PlayerControls : MonoBehaviour
     {
         if (m_myTurn)
         {
+            World.Cell mouseOverCell = GetMouseOverCell();
+            if (mouseOverCell != null && Input.GetMouseButtonDown(0))
+            {
+                if (mouseOverCell.ContainsEntity)
+                {
+                    AttackingEntity.AttackResult res = CombatSolver.Fight(m_actor, mouseOverCell.GetEntity().Actor);
+
+                    if (res != null && res.Weapon != null)
+                    {
+                        Synchronizer.Continue(m_actor, res.Weapon.TimeCost);
+                        return;
+                    }
+                    else if (res.Result == AttackingEntity.AttackResult.ResultValue.NoEnergy)
+                        Debug.Log(res.Weapon.Name+" Out of energy");
+
+                }
+            }
+
             Vector2 move = Vector2.zero;
             if (Input.GetButtonDown("Horizontal"))
             {
@@ -70,6 +89,24 @@ public class PlayerControls : MonoBehaviour
             }
 
         }
+    }
+
+    private World.Cell GetMouseOverCell()
+    {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            int x = (int)(hit.point.x + 0.5);
+            int y = (int)(hit.point.y + 0.5);
+            int z = (int)(hit.point.z + 0.5);
+            Vector3 loc = new Vector3(x, y, z);
+            //Debug.Log(loc);
+            World.Cell cell = World.Instance.GetGrid().GetCell((int)loc.x, (int)loc.z);
+            return cell;
+        }
+        return null;
     }
 }
 
