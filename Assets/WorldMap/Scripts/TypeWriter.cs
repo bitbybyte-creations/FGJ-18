@@ -8,15 +8,19 @@ public class TypeWriter : MonoBehaviour {
     public Text self_;
     public float textSpeed_;
     public Button skipButton_;
+    public bool isWriting_;
 
     private string textToWrite_;
     private bool skipWrite_;
 
     private void Start() {
-        skipButton_.onClick.AddListener(()=>SkipWrite());
+        if (skipButton_ != null)
+        {
+            skipButton_.onClick.AddListener(() => SkipWrite());
+        };
     }
 
-    public void Write(string Text, bool clearText=true) {
+    public void Write(string Text, bool clearText=true, bool showEncounterButton = true) {
         // Remove own text if set
         string theText = Text;
         if (clearText) {
@@ -28,14 +32,15 @@ public class TypeWriter : MonoBehaviour {
         textToWrite_ = theText;
 
         Debug.Log("Writing text: " + theText);
-        StartCoroutine(Writer(theText));
+        StartCoroutine(Writer(theText, showEncounterButton));
     }
     public void SkipWrite() {
         skipWrite_ = true;
     }
 
-    IEnumerator Writer(string theText) {
+    IEnumerator Writer(string theText, bool showEncounterButton = true) {
 
+        isWriting_ = true;
         // Write the text out one letter at a time
         int stringLength = theText.Length;
         string writtenText = "";
@@ -49,7 +54,10 @@ public class TypeWriter : MonoBehaviour {
             }
         }
         self_.text = textToWrite_;
-        WorldMapController.instance_.ShowEncounterButton();
+        if (showEncounterButton)
+        {
+            WorldMapController.instance_.ShowEncounterButton();
+        };
     }
     public void ClearWriter() {
         self_.text = "";

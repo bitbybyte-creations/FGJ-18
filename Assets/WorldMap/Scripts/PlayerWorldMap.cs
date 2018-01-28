@@ -15,7 +15,7 @@ public class PlayerWorldMap : MonoBehaviour {
 
     private RectTransform self_;
     private List<GameObject> spawnedLines_ = new List<GameObject>();
-    private float maxEnergy_ = 100f;
+    public float maxEnergy_ = 100f;
     private int LeanTweenMoveID_;
     private int LeanTweenEnergyLossID_;
     private Coroutine DottedLineRoutine_;
@@ -150,8 +150,12 @@ public class PlayerWorldMap : MonoBehaviour {
         yield return new WaitForEndOfFrame();
         selfPing_.size = 800f;
         selfPing_.animator_.SetTrigger("Ping");
+        // Animate camera to encompass all the pinged places
+        WorldMapController.instance_.ZoomToVisiblePings();
         yield return new WaitForSeconds(2f);
         selfPing_.UpdateTypeTexts(PING_TYPES.PLAYER);
+        
+        
     }
 
 	// Use this for initialization
