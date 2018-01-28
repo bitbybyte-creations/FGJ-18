@@ -11,6 +11,7 @@ public class PlayerControls : MonoBehaviour
     private SynchronizedActor m_actor;
     private LevelBuilder m_levelBuilder;
     private bool m_myTurn;
+    private GameObject m_crosshair;
 
     // Use this for initialization
     void Start()
@@ -38,10 +39,20 @@ public class PlayerControls : MonoBehaviour
     {
         if (m_myTurn)
         {
+            
             World.Cell mouseOverCell = GetMouseOverCell();
-            if (mouseOverCell != null && Input.GetMouseButtonDown(0))
+            if (mouseOverCell != null && mouseOverCell.ContainsEntity)
             {
-                if (mouseOverCell.ContainsEntity)
+                int x, y;
+                Entity ent = mouseOverCell.GetEntity();
+                ent.GetPosition(out x, out y);
+                
+                if (!"Player".Equals(ent.GetType().ToString()))
+                    SetCrosshair(x, y);
+                else
+                    HideCrosshair();
+
+                if (Input.GetMouseButtonDown(0))
                 {
                     AttackingEntity.AttackResult res = CombatSolver.Fight(m_actor, mouseOverCell.GetEntity().Actor);
 
@@ -54,6 +65,10 @@ public class PlayerControls : MonoBehaviour
                         Debug.Log(res.Weapon.Name+" Out of energy");
 
                 }
+            }
+            else
+            {
+                HideCrosshair();
             }
 
             Vector2 move = Vector2.zero;
@@ -95,10 +110,7 @@ public class PlayerControls : MonoBehaviour
                         Synchronizer.Continue(m_actor, res.Weapon.TimeCost);
                         break;
                 }
-
-
             }
-
         }
     }
 
@@ -118,6 +130,21 @@ public class PlayerControls : MonoBehaviour
             return cell;
         }
         return null;
+    }
+
+    private GameObject SetCrosshair(int x, int y)
+    {
+        if (m_crosshair == null)
+            m_crosshair = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        m_crosshair.transform.position = new Vector3(x, 2, y);
+        m_crosshair.SetActive(true);
+        return m_crosshair;
+    }
+
+    private void HideCrosshair()
+    {
+        if (m_crosshair != null)
+            m_crosshair.SetActive(false);
     }
 }
 
