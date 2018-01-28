@@ -12,6 +12,17 @@ public class PlayerControls : MonoBehaviour
     private LevelBuilder m_levelBuilder;
     private bool m_myTurn;
     private GameObject m_crosshair;
+    private Texture2D cursor;
+
+    public Texture2D AimCursor
+    {
+        get
+        {
+            if (cursor == null)
+                cursor = Resources.Load<Texture2D>("Graphics/aim");
+            return cursor;
+        }
+    }
 
     // Use this for initialization
     void Start()
@@ -145,19 +156,21 @@ public class PlayerControls : MonoBehaviour
         return null;
     }
 
-    private GameObject SetCrosshair(int x, int y)
+    private void SetCrosshair(int x, int y)
     {
-        if (m_crosshair == null)
-            m_crosshair = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        m_crosshair.transform.position = new Vector3(x, 2, y);
-        m_crosshair.SetActive(true);
-        return m_crosshair;
+        Cursor.SetCursor(AimCursor, new Vector2(64, 64), CursorMode.Auto);
+        //if (m_crosshair == null)
+        //    m_crosshair = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        //m_crosshair.transform.position = new Vector3(x, 2, y);
+        //m_crosshair.SetActive(true);
+        //return m_crosshair;
     }
 
     private void HideCrosshair()
     {
-        if (m_crosshair != null)
-            m_crosshair.SetActive(false);
+        //if (m_crosshair != null)
+        //    m_crosshair.SetActive(false);
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
 }
 

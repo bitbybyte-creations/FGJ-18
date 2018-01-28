@@ -557,6 +557,7 @@ MonoBehaviour:
   ObjectivePoint:
     X: 0
     Y: 0
+  Verbose: 0
   FourCorners:
   - X: 0
     Y: 0
