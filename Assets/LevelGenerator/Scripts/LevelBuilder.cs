@@ -370,9 +370,13 @@ public class LevelBuilder : MonoBehaviour {
 
             }
         }
-        foreach (World.Tile tile in m_world.GetGrid().GetCell(EndPoint.X, EndPoint.Y).GetTiles())
+
+        if (LevelType != LevelType.Ambush)
         {
-            tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.red;
+            foreach (World.Tile tile in m_world.GetGrid().GetCell(EndPoint.X, EndPoint.Y).GetTiles())
+            {
+                tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.red;
+            }
         }
     }
 
