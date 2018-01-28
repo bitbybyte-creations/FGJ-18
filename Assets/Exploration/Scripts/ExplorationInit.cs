@@ -31,11 +31,21 @@ public class ExplorationInit : MonoBehaviour
         int count = 0;
         foreach (LevelPoint point in enemySpawnPoints)
         {
-            int index = UnityEngine.Random.Range(0, monsterPrefabs.Length);
-            SpawnAtLocation.Spawn(point.X, point.Y, monsterPrefabs[index]);
-            count++;
-            if (count == monsterCount)
-                break;
+
+            try
+            {
+
+                int index = UnityEngine.Random.Range(0, monsterPrefabs.Length);
+                SpawnAtLocation.Spawn(point.X, point.Y, monsterPrefabs[index]);
+                count++;
+                if (count == monsterCount)
+                    break;
+
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
         }
     }
 
