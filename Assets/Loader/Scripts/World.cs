@@ -297,11 +297,15 @@ public class World
                                 c.AddTile(Tile.Set.CORNER_SHARP, x, y, 90);
 
                             //pillar
-                            //if ('_'.Equals(map.GetTile(x + 1, y)) &&
-                            //    '_'.Equals(map.GetTile(x - 1, y)) &&
-                            //    '_'.Equals(map.GetTile(x, y + 1)) &&
-                            //    '_'.Equals(map.GetTile(x, y - 1)))
-                            //    c.AddTile(Tile.Set.PILLAR, x, y, 0);
+                            if ('_'.Equals(map.GetTile(x + 1, y)) &&
+                                '_'.Equals(map.GetTile(x - 1, y)) &&
+                                '_'.Equals(map.GetTile(x, y + 1)) &&
+                                '_'.Equals(map.GetTile(x, y - 1)))
+                            {
+                                c.AddTile(Tile.Set.PILLAR, x, y, 0);
+                                c.AddTile(Tile.Set.FLOOR, x, y, 0);
+                            }
+                            
 
                             break;
                         case '_':
@@ -362,6 +366,7 @@ public class World
             public static string FLOOR { get { return GetSet() + "Floor"; } }
             public static string WALL = GetSet() + "Wall";
             public static string WALL_SEC = GetSet() + "WallSec";
+            public static string PILLAR = GetSet() + "Pillar";
             public static string CORNER_CAVE = GetSet() + "CornerConcave";
             public static string CORNER_CVEX = GetSet() + "CornerConvex";
             public static string CORNER_SHARP = GetSet() + "CornerSharp";
