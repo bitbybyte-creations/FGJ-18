@@ -359,16 +359,16 @@ public class LevelBuilder : MonoBehaviour {
                 {
                     tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.black;
                 }
-            }
+            }                       
+        }
 
-            if (LevelType != LevelType.Ambush)
+        if (LevelType != LevelType.Ambush)
+        {
+            foreach (World.Tile tile in m_world.GetGrid().GetCell(ObjectivePoint.X, ObjectivePoint.Y).GetTiles())
             {
-                foreach (World.Tile tile in m_world.GetGrid().GetCell(ObjectivePoint.X, ObjectivePoint.Y).GetTiles())
-                {
-                    tile.GetGO().GetComponent<MeshRenderer>().material.color = new Color(0.2f, 0.4f, 0.1f);
-                }
-
+                tile.GetGO().GetComponent<MeshRenderer>().material.color = new Color(0.2f, 0.4f, 0.1f);
             }
+
         }
 
         if (LevelType != LevelType.Ambush)

@@ -36,6 +36,11 @@ public class Synchronizer
         }
     }
 
+    internal static void Reset()
+    {
+        m_instance = null;
+    }
+
     public SynchronizedActor Player
     {
         get

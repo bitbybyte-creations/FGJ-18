@@ -16,6 +16,7 @@ public class ReturnToWorldMap : MonoBehaviour {
         {
             WorldMapController.instance_.energy = (float)sa.Entity.Stats.Energy;
         }
+        Synchronizer.Reset();        
 
     }
 
