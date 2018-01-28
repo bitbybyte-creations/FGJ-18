@@ -404,11 +404,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 346499f1f76c71a4db70857ef3b2b553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterCount: 15
+  monsterCount: 10
   playerPrefab: {fileID: 1599237235754108, guid: d4291a80d58bada4db4d1effdd8a2d00,
     type: 2}
   monsterPrefabs:
-  - {fileID: 1899862524669692, guid: d289033b0e8f1a54db78040c166f7b2e, type: 2}
   - {fileID: 1822390675987390, guid: 941a5ee9cfef6dc4baa2c170e6c97659, type: 2}
 --- !u!114 &1549744447
 MonoBehaviour:

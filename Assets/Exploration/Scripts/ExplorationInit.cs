@@ -14,7 +14,13 @@ public class ExplorationInit : MonoBehaviour
     void Start()
     {
         Cursor.visible = true;
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(WorldMapController.currentSceneName_));
+        try
+        {
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(WorldMapController.currentSceneName_));
+        } catch (Exception e)
+        {
+            Debug.LogException(e);
+        }
         //Map map = Loader.LoadFloorTileMap(64);
         //map.GetTiles()[32, 32] = '#';
         //World.Instance.Init(map).Draw();
@@ -65,12 +71,19 @@ public class ExplorationInit : MonoBehaviour
 
         WorldMapController.instance_.typeWriter.Write("I need to find the energy, marked in <color=#ff0>yellow</color>, or exit via <color=#f00>red tile</color>", true, false);        
         PlayerControls c = Synchronizer.Instance.Player.GetComponent<PlayerControls>();
-        ReturnToWorldMap m = GetComponent<ReturnToWorldMap>();
+        ReturnToWorldMap m = GetComponent<ReturnToWorldMap>();        
         c.OnPlayerMovedToEndEvent += m.FinishScene;
         c.OnPlayerMovedToObjectiveEvent += delegate {            
             Synchronizer.Instance.Player.Entity.Stats.Energy += UnityEngine.Random.Range(60, 100);            
             WorldMapController.instance_.typeWriter.Write("This is what I'm looking for! It's time to leave... fast...", true, false);
         };
+        Synchronizer.Instance.OnAllEnemiesDiedEvent += delegate
+        {
+            WorldMapController.instance_.typeWriter.Write("The sounds become silent as the last remaining creatures falls dead upon my feet. I think it's safe to leave now.");
+            Synchronizer.Instance.Player.Entity.Stats.Energy += UnityEngine.Random.Range(40, 80);
+            m.FinishScene();
+        };
+
         Synchronizer.Instance.Player.Entity.Stats.Energy = (int)WorldMapController.instance_.energy;
         
         
