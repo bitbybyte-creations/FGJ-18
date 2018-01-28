@@ -63,7 +63,7 @@ public class ExplorationInit : MonoBehaviour
         if (OnInitEvent != null)
             OnInitEvent();
 
-        WorldMapController.instance_.typeWriter.Write("I need to find the energy, marked in <color=#ff0>yellow</color>, or exit via <color=#f00>red tile</color>", true, false);
+        WorldMapController.instance_.typeWriter.Write("I need to find the energy, marked in <color=#ff0>yellow</color>, or exit via <color=#f00>red tile</color>", true, false);        
         PlayerControls c = Synchronizer.Instance.Player.GetComponent<PlayerControls>();
         ReturnToWorldMap m = GetComponent<ReturnToWorldMap>();
         c.OnPlayerMovedToEndEvent += m.FinishScene;

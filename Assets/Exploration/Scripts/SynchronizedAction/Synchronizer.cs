@@ -38,6 +38,7 @@ public class Synchronizer
 
     internal static void Reset()
     {
+        Debug.LogError("Synchronizer Reset!");
         m_instance = null;
     }
 

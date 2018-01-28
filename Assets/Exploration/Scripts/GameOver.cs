@@ -30,5 +30,6 @@ public class GameOver : MonoBehaviour {
     public void LoadMainMenu()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("mainmenu");
+        Synchronizer.Reset();
     }
 }
