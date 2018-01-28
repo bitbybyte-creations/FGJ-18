@@ -44,26 +44,26 @@ public class EntityStatistics
     {
         MutantWalker = new EntityStatistics("Walker");
 
-        MutantWalker.Attack = 0.15f;
-        MutantWalker.Health = 20;
-        MutantWalker.MoveTime = 12;
+        MutantWalker.Attack = Random.Range(0.25f,0.40f);
+        MutantWalker.Health = Random.Range(15,25);
+        MutantWalker.MoveTime = Random.Range(11,13);
 
         MutantHeavy = new EntityStatistics("Heavy");
-        MutantHeavy.Attack = 0.15f;
-        MutantHeavy.Health = 35;
-        MutantHeavy.MoveTime = 15;
+        MutantHeavy.Attack = Random.Range(0.10f,0.25f);
+        MutantHeavy.Health = Random.Range(30,50);
+        MutantHeavy.MoveTime = Random.Range(13,16);
 
         MutantStalker = new EntityStatistics("Hunter");
-        MutantStalker.Attack = 0.45f;
-        MutantStalker.Health = 12;
-        MutantStalker.MoveTime = 8;
+        MutantStalker.Attack = Random.Range(0.40f,0.50f);
+        MutantStalker.Health = Random.Range(10,16);
+        MutantStalker.MoveTime = Random.Range(7,9);
     }
 
     public static EntityStatistics GetRandomPlayerStats()
     {
         EntityStatistics stats = new EntityStatistics("The Astronaut");
         stats.Energy = Random.Range(90, 140);
-        stats.Health = Random.Range(8, 15);
+        stats.Health = Random.Range(15, 20);
         stats.Attack = Random.Range(0.10f, 0.25f);
         stats.MoveTime = Random.Range(8, 12);
         return stats;
