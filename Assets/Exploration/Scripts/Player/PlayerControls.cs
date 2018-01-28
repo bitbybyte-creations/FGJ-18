@@ -23,6 +23,7 @@ public class PlayerControls : MonoBehaviour
         m_actor.OnTurnStatusChange += actor_OnTurnStatusChange;
     }
     public event Action OnPlayerMovedToEndEvent = null;
+    public event Action OnPlayerMovedToObjectiveEvent = null;
     private void actor_OnTurnStatusChange(bool hasTurn)
     {
         if (hasTurn)
@@ -93,14 +94,26 @@ public class PlayerControls : MonoBehaviour
                     case MovingEntity.MoveResult.ResultValue.Ok:
                         Synchronizer.Continue(m_actor, m_movingEntity.moveActionCost);
 
-                        if(m_levelBuilder.EndPoint.X == result.Cell.X && m_levelBuilder.EndPoint.Y == result.Cell.Y)
+                        if (m_levelBuilder.LevelType != LevelType.Ambush)
                         {
-                            if(OnPlayerMovedToEndEvent != null)
-                            {
-                                OnPlayerMovedToEndEvent();
-                            }
-                        }
 
+                            if (m_levelBuilder.EndPoint.X == result.Cell.X && m_levelBuilder.EndPoint.Y == result.Cell.Y)
+                            {
+                                if (OnPlayerMovedToEndEvent != null)
+                                {
+                                    OnPlayerMovedToEndEvent();
+                                }
+                            }
+
+                            if(m_levelBuilder.ObjectivePoint.X == result.Cell.X && m_levelBuilder.ObjectivePoint.Y == result.Cell.Y)
+                            {
+                                if(OnPlayerMovedToObjectiveEvent != null)
+                                {
+                                    OnPlayerMovedToObjectiveEvent();
+                                }
+                            }
+
+                        }
                         break;
                     case MovingEntity.MoveResult.ResultValue.TileBlocked:
                         //Debug.Log("Tile blocked!");
