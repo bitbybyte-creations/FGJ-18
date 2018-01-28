@@ -43,6 +43,12 @@ public class Synchronizer
             return m_actorList[0];
         }
     }
+    
+    //First actor is the player
+    public List<SynchronizedActor> GetActors()
+    {
+        return m_actorList;
+    }
 
     private List<SynchronizedActor> m_actorList = new List<SynchronizedActor>();
     private ulong m_time = 0;

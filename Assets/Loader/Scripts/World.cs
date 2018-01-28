@@ -125,7 +125,7 @@ public class World
         private Entity _entity;
         private List<Tile> _tiles;
         private bool _blocked;
-        //graphic objects?
+        private bool _visible = false;
 
         public Cell()
         {
@@ -159,10 +159,22 @@ public class World
             }
 
         }
+
+        public void SetVisible(bool visible)
+        {
+            _visible = visible;
+        }
+
+        public bool IsVisible()
+        {
+            return _entity != null && _visible;
+        }
+
         public List<Tile> GetTiles()
         {
             return _tiles;
         }
+
         public List<Item> GetItems()
         {
             return _items;

@@ -51,15 +51,15 @@ public class PlayerControls : MonoBehaviour
     {
         if (m_myTurn)
         {
-            
             World.Cell mouseOverCell = GetMouseOverCell();
             if (mouseOverCell != null && mouseOverCell.ContainsEntity)
             {
+                ApplyLOS();
                 int x, y;
                 Entity ent = mouseOverCell.GetEntity();
                 ent.GetPosition(out x, out y);
                 
-                if (!"Player".Equals(ent.GetType().ToString()))
+                if (!"Player".Equals(ent.GetType().ToString()) && ent.GetCell().IsVisible())
                     SetCrosshair(x, y);
                 else
                     HideCrosshair();
@@ -171,6 +171,69 @@ public class PlayerControls : MonoBehaviour
         //if (m_crosshair != null)
         //    m_crosshair.SetActive(false);
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+    }
+
+    private void ApplyLOS()
+    {
+        World.Cell[,] grid = World.Instance.GetGrid().GetCells();
+
+        int x, y;
+        Synchronizer.Instance.Player.Entity.GetPosition(out x, out y);
+
+        List<SynchronizedActor>  actors = Synchronizer.Instance.GetActors();
+        bool skipfirst = true;
+        foreach (SynchronizedActor a in actors)
+        {
+            if (skipfirst)
+            {
+                skipfirst = false;
+            }
+            else
+            {
+                int xe, ye;
+                a.Entity.GetPosition(out xe, out ye);
+
+                float xd = xe - x;
+                float yd = ye - y;
+
+                bool visible = true;
+                if (Math.Abs(xd) < Math.Abs(yd))
+                {
+                    float d = 0.0f;
+                    for (int i = 0; i < Math.Abs(yd); i++)
+                    {
+                        int xc = (xd < 0 ? -i : i) + x;
+                        d += xd / yd;
+                        int yc = (int)d + y;
+
+                        World.Cell c = grid[xc, yc];
+                        if (c.IsBlocked)
+                        {
+                            visible = false;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    float d = 0.0f;
+                    for (int i = 0; i < Math.Abs(xd); i++)
+                    {
+                        int yc = (yd < 0 ? -i : i) + y;
+                        d += yd / xd;
+                        int xc = (int)d + x;
+
+                        World.Cell c = grid[xc, yc];
+                        if (c.IsBlocked)
+                        {
+                            visible = false;
+                            break;
+                        }
+                    }
+                }
+                grid[xe, ye].SetVisible(visible);
+            }
+        }
     }
 }
 
