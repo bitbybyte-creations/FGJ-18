@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -118,6 +119,8 @@ public class World
     {
         public static readonly Cell NULL = new Cell();
 
+        public readonly int X;
+        public readonly int Y;
         private List<Item> _items;
         private Entity _entity;
         private List<Tile> _tiles;
@@ -126,6 +129,14 @@ public class World
 
         public Cell()
         {
+            _items = new List<Item>();
+            _tiles = new List<Tile>();
+            _blocked = true;
+        }
+        public Cell(int x, int y)
+        {
+            X = x;
+            Y = y;
             _items = new List<Item>();
             _tiles = new List<Tile>();
             _blocked = true;
@@ -203,7 +214,7 @@ public class World
             {
                 for (int y = 0; y < map.Y; y++)
                 {
-                    Cell c = new Cell();
+                    Cell c = new Cell(x,y);
                     switch (map.GetTile(x, y))
                     {
                         case '#':
@@ -211,16 +222,16 @@ public class World
                             if('#'.Equals(map.GetTile(x + 1, y)) && '#'.Equals(map.GetTile(x - 1, y)))
                             {
                                 if('_'.Equals(map.GetTile(x, y + 1)))
-                                    c.AddTile((Random.Range(0f, 1f) < 0.9f ? Tile.Set.WALL : Tile.Set.WALL_SEC), x, y, 180);
+                                    c.AddTile((UnityEngine.Random.Range(0f, 1f) < 0.9f ? Tile.Set.WALL : Tile.Set.WALL_SEC), x, y, 180);
                                 if('_'.Equals(map.GetTile(x, y - 1)))
-                                    c.AddTile((Random.Range(0f, 1f) < 0.9f ? Tile.Set.WALL : Tile.Set.WALL_SEC), x, y, 0);
+                                    c.AddTile((UnityEngine.Random.Range(0f, 1f) < 0.9f ? Tile.Set.WALL : Tile.Set.WALL_SEC), x, y, 0);
                             }
                             else if ('#'.Equals(map.GetTile(x, y + 1)) && '#'.Equals(map.GetTile(x, y - 1)))
                             {
                                 if ('_'.Equals(map.GetTile(x + 1, y)))
-                                    c.AddTile((Random.Range(0f, 1f) < 0.9f ? Tile.Set.WALL : Tile.Set.WALL_SEC), x, y, 270);
+                                    c.AddTile((UnityEngine.Random.Range(0f, 1f) < 0.9f ? Tile.Set.WALL : Tile.Set.WALL_SEC), x, y, 270);
                                 if ('_'.Equals(map.GetTile(x - 1, y)))
-                                    c.AddTile((Random.Range(0f, 1f) < 0.9f ? Tile.Set.WALL : Tile.Set.WALL_SEC), x, y, 90);
+                                    c.AddTile((UnityEngine.Random.Range(0f, 1f) < 0.9f ? Tile.Set.WALL : Tile.Set.WALL_SEC), x, y, 90);
                             }
 
                             //concave
@@ -313,6 +324,21 @@ public class World
             if (x < 0 || y < 0 || x > _grid.GetLength(0) || y > _grid.GetLength(1))
                 return Cell.NULL;
             return _grid[x, y];
+        }
+
+        /// <summary>
+        /// Get four neighbours (left right up down)
+        /// </summary>
+        /// <param name="myCell"></param>
+        /// <returns></returns>
+        internal Cell[] GetNeighbours4(Cell myCell)
+        {
+            Cell[] result = new Cell[4];
+            result[0] = GetCell(myCell.X - 1, myCell.Y);
+            result[1] = GetCell(myCell.X + 1, myCell.Y);
+            result[2] = GetCell(myCell.X, myCell.Y - 1);
+            result[3] = GetCell(myCell.X, myCell.Y + 1);
+            return result;
         }
     }
 

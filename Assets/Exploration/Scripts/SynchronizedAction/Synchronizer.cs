@@ -46,7 +46,7 @@ public class Synchronizer
     private ulong m_time = 0;
 
     public static bool IsPlayerTurn { get { return Instance.Player.ActionTime == 0; } }
-
+    
     public Synchronizer()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");

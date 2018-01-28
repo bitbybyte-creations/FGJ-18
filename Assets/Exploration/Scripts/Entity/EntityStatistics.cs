@@ -8,11 +8,13 @@ public class EntityStatistics
     private float m_attack = 0.10f;
     private int m_health = 10;
     private int m_moveTime = 10;
-    public string Name { get { return m_name; }internal set { m_name = value; } }
-    public int Energy { get { return m_energy; } internal set { m_energy = value; } }
-    public float Attack { get { return m_attack; } internal set { m_attack = value; } }
-    public int Health { get { return m_health; } internal set { m_health = value; } }
-    public int MoveTime { get { return m_moveTime; } internal set { m_moveTime = value; } }
+    public string Name { get { return m_name; }internal set { m_name = value; if (OnStatsChangedEvent != null) OnStatsChangedEvent(); } }
+    public int Energy { get { return m_energy; } internal set { m_energy = value; if (OnStatsChangedEvent != null) OnStatsChangedEvent(); } }
+    public float Attack { get { return m_attack; } internal set { m_attack = value; if (OnStatsChangedEvent != null) OnStatsChangedEvent(); } }
+    public int Health { get { return m_health; } internal set { m_health = value; if (OnStatsChangedEvent != null) OnStatsChangedEvent(); } }
+    public int MoveTime { get { return m_moveTime; } internal set { m_moveTime = value; if (OnStatsChangedEvent != null) OnStatsChangedEvent(); } }
+
+    public event System.Action OnStatsChangedEvent;
 
     public EntityStatistics(string entityName)
     {

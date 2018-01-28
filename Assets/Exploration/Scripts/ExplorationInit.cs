@@ -45,6 +45,7 @@ public class ExplorationInit : MonoBehaviour
         ///baash stooppoid
         Debug.Log("Synchronizer Create");
         Synchronizer.Start();
+        GetComponent<PlayerUI>().Init();
     }
 
 }
