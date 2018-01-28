@@ -342,18 +342,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c19b8221ce3fda4bb200661e55f0d88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelWidth: 100
-  LevelHeigth: 100
-  MaxPathLen: 30
-  MinPathLen: 15
-  MaxPaths: 40
-  MinPaths: 20
-  MaxEnemySpawnCount: 50
-  MinEnemySpawnCount: 50
+  LevelWidth: 200
+  LevelHeigth: 200
+  MaxPathLen: 100
+  MinPathLen: 75
+  MaxPaths: 50
+  MinPaths: 30
+  MaxEnemySpawnCount: 10
+  MinEnemySpawnCount: 5
   EnemyMinDistance: 10
   MinObjectiveDistance: 20
-  LevelType: 2
-  BuildMode: 2
+  LevelType: 1
+  BuildMode: 0
   StartPoint:
     X: 0
     Y: 0
@@ -399,12 +399,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 346499f1f76c71a4db70857ef3b2b553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterCount: 20
+  monsterCount: 40
   playerPrefab: {fileID: 1599237235754108, guid: d4291a80d58bada4db4d1effdd8a2d00,
     type: 2}
   monsterPrefabs:
   - {fileID: 1899862524669692, guid: d289033b0e8f1a54db78040c166f7b2e, type: 2}
   - {fileID: 1822390675987390, guid: 941a5ee9cfef6dc4baa2c170e6c97659, type: 2}
+  - {fileID: 1772536582349242, guid: 3c70f2982b3f0614796ffef7d0ff1df7, type: 2}
 --- !u!114 &1549744447
 MonoBehaviour:
   m_ObjectHideFlags: 0
