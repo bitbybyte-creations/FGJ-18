@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class PingZone : MonoBehaviour {
 
-    public PING_TYPES[] types_;
+    public WorldMapEncounter[] types_;
 
     public Ping Initialize() {
 
         // Spawn a random type in a random position inside this rect
         Rect bound = GetComponent<RectTransform>().rect;
         Vector3 center = bound.center;
+        // Pick a random encounter and grab its type
+        int randomencounterindex = Random.Range(0, types_.Length);
+        PING_TYPES type = types_[randomencounterindex].type_;
 
-        GameObject pingObj = WorldMapController.instance_.SpawnPingType(types_[Random.Range(0, types_.Length)]).gameObject;
+        GameObject pingObj = WorldMapController.instance_.SpawnPingType(type).gameObject;
+        Ping thePing = pingObj.GetComponent<Ping>();
+        thePing.encounter_ = types_[randomencounterindex];
         pingObj.transform.SetParent(transform, false);
         Debug.Log(pingObj.name);
         Vector3 randomPos = center + new Vector3(
@@ -22,6 +27,6 @@ public class PingZone : MonoBehaviour {
 
         pingObj.transform.localPosition = randomPos;
 
-        return pingObj.GetComponent<Ping>();
+        return thePing;
     }
 }

@@ -324,6 +324,7 @@ GameObject:
   - component: {fileID: 1549744444}
   - component: {fileID: 1549744446}
   - component: {fileID: 1549744447}
+  - component: {fileID: 1549744448}
   m_Layer: 0
   m_Name: Start
   m_TagString: Untagged
@@ -348,8 +349,8 @@ MonoBehaviour:
   MinPathLen: 15
   MaxPaths: 40
   MinPaths: 20
-  MaxEnemySpawnCount: 50
-  MinEnemySpawnCount: 50
+  MaxEnemySpawnCount: 20
+  MinEnemySpawnCount: 10
   EnemyMinDistance: 10
   MinObjectiveDistance: 20
   LevelType: 2
@@ -417,6 +418,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+--- !u!114 &1549744448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1549744443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26683cd53212f514382c34bf654031f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1636513095
 GameObject:
   m_ObjectHideFlags: 0

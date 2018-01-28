@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.SceneManagement;
 
 public class ExplorationInit : MonoBehaviour
 {
@@ -12,6 +13,14 @@ public class ExplorationInit : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Cursor.visible = true;
+        try
+        {
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(WorldMapController.currentSceneName_));
+        } catch (Exception e)
+        {
+            Debug.LogException(e);
+        }
         //Map map = Loader.LoadFloorTileMap(64);
         //map.GetTiles()[32, 32] = '#';
         //World.Instance.Init(map).Draw();
@@ -59,6 +68,25 @@ public class ExplorationInit : MonoBehaviour
         GetComponent<PlayerUI>().Init();
         if (OnInitEvent != null)
             OnInitEvent();
+
+        WorldMapController.instance_.typeWriter.Write("I need to find the energy, marked in <color=#ff0>yellow</color>, or exit via <color=#f00>red tile</color>", true, false);        
+        PlayerControls c = Synchronizer.Instance.Player.GetComponent<PlayerControls>();
+        ReturnToWorldMap m = GetComponent<ReturnToWorldMap>();        
+        c.OnPlayerMovedToEndEvent += m.FinishScene;
+        c.OnPlayerMovedToObjectiveEvent += delegate {            
+            Synchronizer.Instance.Player.Entity.Stats.Energy += UnityEngine.Random.Range(60, 100);            
+            WorldMapController.instance_.typeWriter.Write("This is what I'm looking for! It's time to leave... fast...", true, false);
+        };
+        Synchronizer.Instance.OnAllEnemiesDiedEvent += delegate
+        {
+            WorldMapController.instance_.typeWriter.Write("The sounds become silent as the last remaining creatures falls dead upon my feet. I think it's safe to leave now.");
+            Synchronizer.Instance.Player.Entity.Stats.Energy += UnityEngine.Random.Range(40, 80);
+            m.FinishScene();
+        };
+
+        Synchronizer.Instance.Player.Entity.Stats.Energy = (int)WorldMapController.instance_.energy;
+        
+        
     }
 
 }
