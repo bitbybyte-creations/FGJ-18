@@ -11,6 +11,8 @@ public class WorldMapController : Object {
 
     private Transform worldMap_;
 
+    private Image fadeCanvas_;
+
     private Camera worldMapCamera_;
 
     private GameObject EncounterUI_;
@@ -57,6 +59,17 @@ public class WorldMapController : Object {
             return worldMap_;
         }
     }
+    public Image FadeCanvas
+    {
+        get
+        {
+            if (fadeCanvas_ == null)
+            {
+                fadeCanvas_ = GameObject.Find("FadePanel").GetComponent<Image>();
+            };
+            return fadeCanvas_;
+        }
+    }
     public Camera worldMapCamera {
         get {
             if (worldMapCamera_ == null) {
@@ -98,6 +111,11 @@ public class WorldMapController : Object {
         
     }
 
+    public void ZoomToVisiblePings()
+    {
+        // Zooms camera to encompass all visible pings
+    }
+
     public void ShowEncounterButton(bool show = true) {
 
         if (EncounterUI_ == null) {
@@ -118,6 +136,8 @@ public class WorldMapController : Object {
     }
 
     public void InitializeWorldMap() {
+        // Fade!
+        FadeCanvas.color = Color.black;
         // Gather all zones
         PingZone[] allZones = FindObjectsOfType<PingZone>();
 
@@ -140,6 +160,22 @@ public class WorldMapController : Object {
                 ping.SetPingState(PING_STATES.PINGED);
             }
         }
+        // Fade out!
+        FadeOut(2f, ()=> typeWriter.Write("My scanner (button to the left) will pick up places of interest...", true, false));
+    }
+
+    public void FadeIn(float time)
+    {
+        LeanTween.value(FadeCanvas.gameObject, Fader, 0f, 1f, time);
+    }
+    public void FadeOut(float time, System.Action onComplete)
+    {
+        LeanTween.value(FadeCanvas.gameObject, Fader, 1f, 0f, time).setOnComplete(onComplete);
+    }
+
+    void Fader(float newfade)
+    {
+        FadeCanvas.color = new Color(0, 0, 0, newfade);
     }
 
 }
