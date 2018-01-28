@@ -12,6 +12,8 @@ public class WorldMapController : Object {
 
     private static float energy_;
 
+    private static int artefactsCollected_;
+
     private static Transform worldMap_;
 
     private static Image fadeCanvas_;
@@ -21,6 +23,8 @@ public class WorldMapController : Object {
     private static GameObject EncounterUI_;
 
     private static Button GoToEncounterButton_;
+
+    private static Button pingButton_;
 
     private static Ping[] allPings_;
 
@@ -102,6 +106,17 @@ public class WorldMapController : Object {
             return typeWriter_;
         }
     }
+
+    public Button pingButton {
+        get {
+            if (pingButton_ == null) {
+                Debug.Log("Assigning pingbutton");
+                pingButton_ = GameObject.Find("PingButton").GetComponent<Button>();
+            }
+            return pingButton_;
+        }
+    }
+
     public Ping[] allPings {
         get {
            
@@ -115,6 +130,15 @@ public class WorldMapController : Object {
         }
         set {
             energy_ = value;
+        }
+    }
+
+    public int artifacts {
+        get {
+            return artefactsCollected_;
+        }
+        set {
+            artefactsCollected_ = value;
         }
     }
 
@@ -158,6 +182,7 @@ public class WorldMapController : Object {
         // After clicking the explore button
         typeWriter.ClearWriter();
         player.allowTravel = false;
+        pingButton.onClick.RemoveAllListeners();
         float currentCameraZoom = worldMapCamera.orthographicSize;
         LeanTweenId_ = LeanTween.value(worldMapCamera.gameObject, SetCameraZoom, currentCameraZoom, 1f, 2f).setEase(LeanTweenType.easeOutQuad).id;
         FadeIn(2f, delegate { EnableMap(false); LoadScene(); });
@@ -179,6 +204,18 @@ public class WorldMapController : Object {
         player.allowTravel = true;
         currentPing_.SetPingState(PING_STATES.EXPLORED);
         ZoomOutOfPing();
+        if (currentSceneName_ == "EndGame") {
+            LoadOutro();
+        };
+        pingButton.onClick.AddListener(() => WorldMapController.instance_.player.Ping());
+    }
+
+    public void LoadOutro() {
+        typeWriter.ClearWriter();
+        player.allowTravel = false;
+        float currentCameraZoom = worldMapCamera.orthographicSize;
+        LeanTweenId_ = LeanTween.value(worldMapCamera.gameObject, SetCameraZoom, currentCameraZoom, 1f, 2f).setEase(LeanTweenType.easeOutQuad).id;
+        FadeIn(2f, delegate { EnableMap(false); AsyncOperation loading = SceneManager.LoadSceneAsync("endscene", LoadSceneMode.Single); });
     }
 
     public void ZoomToVisiblePings()

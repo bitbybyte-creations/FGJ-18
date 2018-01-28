@@ -10,6 +10,7 @@ public class IntroManager : MonoBehaviour {
     public TypeWriter textWriter_;
     public CanvasGroup maincanvasgroup_;
     public Image blackOutCanvas_;
+    public Text artifactsText_;
     [Multiline]
     public string textWritten_;
     public Button startButton_;
@@ -17,10 +18,13 @@ public class IntroManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         WorldMapController.instance_.energy = 100f;
+        //WorldMapController.instance_.artifacts = 0;
         pingAnimator_.SetTrigger("Ping");
         textWriter_.Write(textWritten_, true, false);
         startButton_.onClick.AddListener(()=>StartGameAnim());
-	}
+        artifactsText_.text = WorldMapController.instance_.artifacts.ToString();
+
+    }
 
     void StartGame()
     {

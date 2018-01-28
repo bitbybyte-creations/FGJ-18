@@ -177,6 +177,8 @@ public class PlayerWorldMap : MonoBehaviour {
         selfPing_.animator_.SetTrigger("Ping");
         WorldMapController.instance_.energy = energyleft_;
 
+        WorldMapController.instance_.pingButton.onClick.AddListener(()=>Ping());
+
         // Start the game from here, lol
 
         WorldMapController.instance_.InitializeWorldMap();
