@@ -30,7 +30,7 @@ public class LevelBuilder : MonoBehaviour {
     public LevelPoint EndPoint;
     public LevelPoint ObjectivePoint;
 
-
+    public bool Verbose = false;
     
     private const int UP_LEFT = 0;
     private const int UP_RIGTH = 1;
@@ -325,51 +325,53 @@ public class LevelBuilder : MonoBehaviour {
         EnemySpawnPoints = new LevelPoint[Random.Range(MinEnemySpawnCount, MaxEnemySpawnCount)];
         generateSpawnEnemySpawnPoints();
 
-
-        foreach(World.Tile tile in m_world.GetGrid().GetCell(FourCorners[UP_LEFT].X, FourCorners[UP_LEFT].Y).GetTiles())
+        if (Verbose)
         {
-            tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.red;
-        }
-
-        foreach (World.Tile tile in m_world.GetGrid().GetCell(FourCorners[UP_RIGTH].X, FourCorners[UP_RIGTH].Y).GetTiles())
-        {
-            tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.magenta;
-        }
-
-        foreach (World.Tile tile in m_world.GetGrid().GetCell(FourCorners[DOWN_LEFT].X, FourCorners[DOWN_LEFT].Y).GetTiles())
-        {
-            tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.cyan;
-        }
-
-        foreach (World.Tile tile in m_world.GetGrid().GetCell(FourCorners[DOWN_RIGTH].X, FourCorners[DOWN_RIGTH].Y).GetTiles())
-        {
-            tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.green;
-        }
-
-
-        foreach (World.Tile tile in m_world.GetGrid().GetCell(StartPoint.X, StartPoint.Y).GetTiles())
-        {
-            tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.yellow;
-        }
-
-        foreach (LevelPoint point in EnemySpawnPoints)
-        {
-            foreach (World.Tile tile in m_world.GetGrid().GetCell(point.X, point.Y).GetTiles())
+            foreach (World.Tile tile in m_world.GetGrid().GetCell(FourCorners[UP_LEFT].X, FourCorners[UP_LEFT].Y).GetTiles())
             {
-                tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.black;
-            }
-        }
-
-        if (LevelType != LevelType.Ambush)
-        {
-            foreach (World.Tile tile in m_world.GetGrid().GetCell(ObjectivePoint.X, ObjectivePoint.Y).GetTiles())
-            {
-                tile.GetGO().GetComponent<MeshRenderer>().material.color = new Color(0.2f, 0.4f, 0.1f);
+                tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.red;
             }
 
-            foreach (World.Tile tile in m_world.GetGrid().GetCell(EndPoint.X, EndPoint.Y).GetTiles())
+            foreach (World.Tile tile in m_world.GetGrid().GetCell(FourCorners[UP_RIGTH].X, FourCorners[UP_RIGTH].Y).GetTiles())
             {
-                tile.GetGO().GetComponent<MeshRenderer>().material.color = new Color(1f, 0.5f, 0f);
+                tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.magenta;
+            }
+
+            foreach (World.Tile tile in m_world.GetGrid().GetCell(FourCorners[DOWN_LEFT].X, FourCorners[DOWN_LEFT].Y).GetTiles())
+            {
+                tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.cyan;
+            }
+
+            foreach (World.Tile tile in m_world.GetGrid().GetCell(FourCorners[DOWN_RIGTH].X, FourCorners[DOWN_RIGTH].Y).GetTiles())
+            {
+                tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.green;
+            }
+
+
+            foreach (World.Tile tile in m_world.GetGrid().GetCell(StartPoint.X, StartPoint.Y).GetTiles())
+            {
+                tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.yellow;
+            }
+
+            foreach (LevelPoint point in EnemySpawnPoints)
+            {
+                foreach (World.Tile tile in m_world.GetGrid().GetCell(point.X, point.Y).GetTiles())
+                {
+                    tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.black;
+                }
+            }
+
+            if (LevelType != LevelType.Ambush)
+            {
+                foreach (World.Tile tile in m_world.GetGrid().GetCell(ObjectivePoint.X, ObjectivePoint.Y).GetTiles())
+                {
+                    tile.GetGO().GetComponent<MeshRenderer>().material.color = new Color(0.2f, 0.4f, 0.1f);
+                }
+
+                foreach (World.Tile tile in m_world.GetGrid().GetCell(EndPoint.X, EndPoint.Y).GetTiles())
+                {
+                    tile.GetGO().GetComponent<MeshRenderer>().material.color = new Color(1f, 0.5f, 0f);
+                }
             }
         }
 

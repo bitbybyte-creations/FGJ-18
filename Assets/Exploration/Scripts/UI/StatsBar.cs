@@ -6,7 +6,7 @@ using UnityEngine;
 public class StatsBar : MonoBehaviour
 {
 
-    private GameObject blockPrefab;
+    public GameObject blockPrefab;
     private static StatsBar m_instance;
     private Dictionary<string, StatBlock> m_blocks = new Dictionary<string, StatBlock>();
 

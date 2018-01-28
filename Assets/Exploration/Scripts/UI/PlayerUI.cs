@@ -28,6 +28,8 @@ public class PlayerUI : MonoBehaviour {
         EntityStatistics stats = PlayerActor.Stats;
 
         StatsBar.Instance.SetStat("HP", stats.Health.ToString());
-        
+        StatsBar.Instance.SetStat("ENERGY", stats.Energy.ToString());
+        StatsBar.Instance.SetStat("ATTACK", String.Format("{0:P0}", stats.Attack));
+
     }
 }

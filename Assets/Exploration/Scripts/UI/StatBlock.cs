@@ -37,7 +37,7 @@ public class StatBlock : MonoBehaviour {
     private string m_key;
     private string m_value;
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         m_text = GetComponent<Text>();
 	}
 	
