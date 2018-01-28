@@ -30,6 +30,7 @@ public class PlayerUI : MonoBehaviour {
         StatsBar.Instance.SetStat("HP", stats.Health.ToString());
         StatsBar.Instance.SetStat("ENERGY", stats.Energy.ToString());
         StatsBar.Instance.SetStat("ATTACK", String.Format("{0:P0}", stats.Attack));
+        StatsBar.Instance.SetStat("SPEED", stats.SpeedString);
 
     }
 }

@@ -14,6 +14,22 @@ public class EntityStatistics
     public int Health { get { return m_health; } internal set { m_health = value; if (OnStatsChangedEvent != null) OnStatsChangedEvent(); } }
     public int MoveTime { get { return m_moveTime; } internal set { m_moveTime = value; if (OnStatsChangedEvent != null) OnStatsChangedEvent(); } }
 
+    public string SpeedString
+    {
+        get
+        {
+            return string.Format("{0:P0}", 10f / (float)MoveTime);
+        }
+    }
+
+    public string AttackString
+    {
+        get
+        {
+            return string.Format("{0:P0}", Attack);
+        }
+    }
+
     public event System.Action OnStatsChangedEvent;
 
     public EntityStatistics(string entityName)
@@ -21,9 +37,9 @@ public class EntityStatistics
         m_name = entityName;
     }
 
-    public static EntityStatistics MutantHeavy;
-    public static EntityStatistics MutantWalker;
-    public static EntityStatistics MutantStalker;
+    public static readonly EntityStatistics MutantHeavy;
+    public static readonly EntityStatistics MutantWalker;
+    public static readonly EntityStatistics MutantStalker;
     static EntityStatistics()
     {
         MutantWalker = new EntityStatistics("Walker");
@@ -35,12 +51,12 @@ public class EntityStatistics
         MutantHeavy = new EntityStatistics("Heavy");
         MutantHeavy.Attack = 0.15f;
         MutantHeavy.Health = 35;
-        MutantHeavy.MoveTime = 20;
+        MutantHeavy.MoveTime = 15;
 
         MutantStalker = new EntityStatistics("Hunter");
         MutantStalker.Attack = 0.45f;
         MutantStalker.Health = 12;
-        MutantStalker.MoveTime = 7;
+        MutantStalker.MoveTime = 8;
     }
 
     public static EntityStatistics GetRandomPlayerStats()
@@ -51,5 +67,15 @@ public class EntityStatistics
         stats.Attack = Random.Range(0.10f, 0.25f);
         stats.MoveTime = Random.Range(8, 12);
         return stats;
+    }
+    
+    public EntityStatistics Clone()
+    {
+        EntityStatistics res = new EntityStatistics(Name);
+        res.Attack = Attack;
+        res.Health = Health;
+        res.MoveTime = MoveTime;
+        return res;
+
     }
 }

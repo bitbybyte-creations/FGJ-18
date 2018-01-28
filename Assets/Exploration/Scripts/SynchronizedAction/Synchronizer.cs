@@ -8,6 +8,8 @@ public class Synchronizer
 
     private static Synchronizer m_instance;
 
+    public event Action OnPlayerDiedEvent;
+
     public static Synchronizer Instance
     {
         get
@@ -130,8 +132,16 @@ public class Synchronizer
             }
             
         }
+        Entity e = actor.Entity;
         actor.Entity.GetCell().SetEntity(null);
         actor.gameObject.SetActive(false);
+        if (e.GetType() == typeof(Player))
+        {
+            if (OnPlayerDiedEvent != null)
+            {
+                OnPlayerDiedEvent();
+            }
+        }
 
     }
 }

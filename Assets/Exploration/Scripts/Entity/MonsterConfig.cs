@@ -36,11 +36,11 @@ public class MonsterConfig : MonoBehaviour
         switch (type)
         {
             case MonsterType.Heavy:
-                return EntityStatistics.MutantHeavy;
+                return EntityStatistics.MutantHeavy.Clone();
             case MonsterType.Stalker:
-                return EntityStatistics.MutantStalker;
+                return EntityStatistics.MutantStalker.Clone();
             case MonsterType.Walker:
-                return EntityStatistics.MutantWalker;
+                return EntityStatistics.MutantWalker.Clone();
         }
         return null;
     }

@@ -8,6 +8,7 @@ public class ExplorationInit : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject[] monsterPrefabs;
     private LevelBuilder m_builder;
+    public event Action OnInitEvent;
     // Use this for initialization
     void Start()
     {
@@ -46,6 +47,8 @@ public class ExplorationInit : MonoBehaviour
         Debug.Log("Synchronizer Create");
         Synchronizer.Start();
         GetComponent<PlayerUI>().Init();
+        if (OnInitEvent != null)
+            OnInitEvent();
     }
 
 }
