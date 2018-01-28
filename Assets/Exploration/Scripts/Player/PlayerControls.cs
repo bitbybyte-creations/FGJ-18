@@ -9,6 +9,7 @@ public class PlayerControls : MonoBehaviour
     private MovingEntity m_movingEntity;
     private AttackingEntity m_attackingEntity;
     private SynchronizedActor m_actor;
+    private LevelBuilder m_levelBuilder;
     private bool m_myTurn;
 
     // Use this for initialization
@@ -17,9 +18,10 @@ public class PlayerControls : MonoBehaviour
         m_movingEntity = GetComponent<MovingEntity>();
         m_attackingEntity = GetComponent<AttackingEntity>();
         m_actor = GetComponent<SynchronizedActor>();
+        m_levelBuilder = FindObjectOfType<LevelBuilder>();
         m_actor.OnTurnStatusChange += actor_OnTurnStatusChange;
     }
-
+    public event Action OnPlayerMovedToEndEvent = null;
     private void actor_OnTurnStatusChange(bool hasTurn)
     {
         if (hasTurn)
@@ -75,6 +77,15 @@ public class PlayerControls : MonoBehaviour
                 {
                     case MovingEntity.MoveResult.ResultValue.Ok:
                         Synchronizer.Continue(m_actor, m_movingEntity.moveActionCost);
+
+                        if(m_levelBuilder.EndPoint.X == result.Cell.X && m_levelBuilder.EndPoint.Y == result.Cell.Y)
+                        {
+                            if(OnPlayerMovedToEndEvent != null)
+                            {
+                                OnPlayerMovedToEndEvent();
+                            }
+                        }
+
                         break;
                     case MovingEntity.MoveResult.ResultValue.TileBlocked:
                         //Debug.Log("Tile blocked!");
