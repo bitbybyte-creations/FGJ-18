@@ -10,6 +10,7 @@ public class PlayerWorldMap : MonoBehaviour {
     public float pingStrength_ = 1f;
     public Ping selfPing_;
     public bool travelling_;
+    public bool canTravel_ = true;
 
     public GameObject travelLine_;
 
@@ -47,21 +48,32 @@ public class PlayerWorldMap : MonoBehaviour {
         }
     }
 
+    public bool allowTravel {
+        get {
+            return canTravel_;
+        }
+        set {
+            canTravel_ = value;
+        }
+    }
+
     public void NewTravel(RectTransform target)
     {
-        CancelTravel();
-        float dist = Vector2.Distance(transform.position, target.transform.position);
-        float duration = dist/speed_;
-        Vector2 localPoint = target.position;
-        float oldEnergy = energyLeft;
-        float newEnergy = oldEnergy - EnergyCost(target.transform.position);
-        
+        if (canTravel_) {
+            CancelTravel();
+            float dist = Vector2.Distance(transform.position, target.transform.position);
+            float duration = dist / speed_;
+            Vector2 localPoint = target.position;
+            float oldEnergy = energyLeft;
+            float newEnergy = oldEnergy - EnergyCost(target.transform.position);
 
-        //Debug.Log("Moving player for " + duration.ToString() + " seconds to position " + transform.position);
-        LeanTweenMoveID_ = LeanTween.move(self_.gameObject, localPoint, duration).setOnComplete(()=>StartCoroutine(TravelFinished(target.GetComponent<Ping>()))).id;
-        
-        LeanTweenEnergyLossID_ = LeanTween.value(gameObject, DrainEnergy, oldEnergy, newEnergy, duration).id;
-        DottedLineRoutine_ = StartCoroutine(Travelling(target, duration));
+
+            //Debug.Log("Moving player for " + duration.ToString() + " seconds to position " + transform.position);
+            LeanTweenMoveID_ = LeanTween.move(self_.gameObject, localPoint, duration).setOnComplete(() => StartCoroutine(TravelFinished(target.GetComponent<Ping>()))).id;
+
+            LeanTweenEnergyLossID_ = LeanTween.value(gameObject, DrainEnergy, oldEnergy, newEnergy, duration).id;
+            DottedLineRoutine_ = StartCoroutine(Travelling(target, duration));
+        };
     }
 
     public void DrainEnergy(float amount)

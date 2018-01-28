@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.122
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.15376416, g: 0.17450586, b: 0.20713893, a: 0.122}
+  m_IndirectSpecularColor: {r: 0.12318919, g: 0.12636107, b: 0.11719897, a: 0.122}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -455,8 +455,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -158.6, y: -258.6}
-  m_SizeDelta: {x: 478.8, y: 290.5}
+  m_AnchoredPosition: {x: -158.6, y: -269.09}
+  m_SizeDelta: {x: 478.8, y: 311.47}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &599416653
 MonoBehaviour:
@@ -493,7 +493,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e688501f3604a0741a1655d635714eaa, type: 3}
+    m_Font: {fileID: 12800000, guid: 6f63383fba5e3bc4683cb5907d87bfee, type: 3}
     m_FontSize: 15
     m_FontStyle: 0
     m_BestFit: 0
@@ -916,7 +916,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e688501f3604a0741a1655d635714eaa, type: 3}
+    m_Font: {fileID: 12800000, guid: 6f63383fba5e3bc4683cb5907d87bfee, type: 3}
     m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
@@ -1308,7 +1308,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e688501f3604a0741a1655d635714eaa, type: 3}
+    m_Font: {fileID: 12800000, guid: bfc6ed5911328614b93127bdc204d251, type: 3}
     m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
@@ -1446,27 +1446,24 @@ MonoBehaviour:
   textWriter_: {fileID: 599416653}
   maincanvasgroup_: {fileID: 1135302382}
   blackOutCanvas_: {fileID: 869931544}
-  textWritten_: 'Cryosleep wake-up complete.
+  textWritten_: 'Start Log (FGJX-28012018)
 
 
-    You have reached your destination.
+    This is where the signal originated from. My ship''s batteries are critically
+    drained. Scans indicate an energy source somewhere planetside. I have to recharge.
 
 
-    Warning: Energy levels critical.
-
-    Recommendation: Refill energy.
-
-
-    Multiple signals located planetside.
-
-    New mission parameters:
+    The world below is so quiet. No-one is answering my hails. But the computer detects
+    movement under the surface.
 
 
-    - Priority one: Find new energy source.
+    Task list:
 
-    - Priority two: Collect scientific artifacts.
+    - Find energy source.
 
-    - Priority three: Discover the truth.'
+    - Collect artefacts.
+
+    - Find the source of the signal.'
   startButton_: {fileID: 32758764}
 --- !u!4 &2119852529
 Transform:
