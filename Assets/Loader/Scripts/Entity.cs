@@ -54,7 +54,7 @@ public abstract class Entity
         return _pos;
     }
 
-    public void Move(int x, int y)
+    public virtual void Move(int x, int y)
     {
         //Debug.Log("Entity " + _id + " Move to " + x + ", " + y);
         _x = x;
@@ -75,7 +75,7 @@ public class Player : Entity
         GenerateHeatMap(x, y);
     }
 
-    public new void Move(int x, int y)
+    public override void Move(int x, int y)
     {
         base.Move(x, y);
         GenerateHeatMap(x, y);
