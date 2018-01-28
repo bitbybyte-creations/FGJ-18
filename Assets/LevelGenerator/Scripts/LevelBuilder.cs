@@ -368,13 +368,12 @@ public class LevelBuilder : MonoBehaviour {
                     tile.GetGO().GetComponent<MeshRenderer>().material.color = new Color(0.2f, 0.4f, 0.1f);
                 }
 
-                foreach (World.Tile tile in m_world.GetGrid().GetCell(EndPoint.X, EndPoint.Y).GetTiles())
-                {
-                    tile.GetGO().GetComponent<MeshRenderer>().material.color = new Color(1f, 0.5f, 0f);
-                }
             }
         }
-
+        foreach (World.Tile tile in m_world.GetGrid().GetCell(EndPoint.X, EndPoint.Y).GetTiles())
+        {
+            tile.GetGO().GetComponent<MeshRenderer>().material.color = Color.red;
+        }
     }
 
 
