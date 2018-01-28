@@ -10,6 +10,8 @@ public class WorldMapController : Object {
 
     private static PlayerWorldMap player_;
 
+    private static float energy_;
+
     private static Transform worldMap_;
 
     private static Image fadeCanvas_;
@@ -104,6 +106,21 @@ public class WorldMapController : Object {
         get {
            
             return allPings_;
+        }
+    }
+
+    public float energy {
+        get {
+            return energy_;
+        }
+        set {
+            energy_ = value;
+        }
+    }
+
+    public float AddEnergy {
+        set {
+            energy_ += value;
         }
     }
 

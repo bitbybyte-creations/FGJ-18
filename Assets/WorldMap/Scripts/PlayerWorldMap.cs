@@ -39,12 +39,12 @@ public class PlayerWorldMap : MonoBehaviour {
     {
         get
         {
-            return energyleft_;
+            return WorldMapController.instance_.energy;
         }
         set
         {
-            energyleft_ = value;
-            Mathf.Clamp(energyleft_, 0, maxEnergy_);
+            WorldMapController.instance_.energy = value;
+            Mathf.Clamp(WorldMapController.instance_.energy, 0, maxEnergy_);
         }
     }
 
@@ -175,6 +175,7 @@ public class PlayerWorldMap : MonoBehaviour {
         self_ = GetComponent<RectTransform>();
         LineParent_ = WorldMapController.instance_.worldMap.Find("LineParent");
         selfPing_.animator_.SetTrigger("Ping");
+        WorldMapController.instance_.energy = energyleft_;
 
         // Start the game from here, lol
 
