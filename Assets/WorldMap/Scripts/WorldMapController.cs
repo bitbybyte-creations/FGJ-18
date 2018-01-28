@@ -23,6 +23,10 @@ public class WorldMapController : Object {
 
     private TypeWriter typeWriter_;
 
+    private Ping furthestPing_;
+
+    private int LeanTweenId_;
+
     public string path_ = "WorldMapPrefabs/prefab_Ping";
 
     public static WorldMapController instance_
@@ -103,17 +107,70 @@ public class WorldMapController : Object {
 
         // Zooms world map camera to ping, and displays encounter data
         typeWriter.Write(target.encounter_.flavorText_);
+        float currentCameraZoom = worldMapCamera.orthographicSize;
+        LeanTweenId_ = LeanTween.value(worldMapCamera.gameObject, SetCameraZoom, currentCameraZoom, 3f, .5f).setEase(LeanTweenType.easeInQuad).id;
     }
 
     public void ZoomOutOfPing() {
         // Zooms back to default position
         typeWriter.ClearWriter();
-        
+        float currentCameraZoom = worldMapCamera.orthographicSize;
+        LeanTweenId_ = LeanTween.value(worldMapCamera.gameObject, SetCameraZoom, currentCameraZoom, 5f, 2f).setEase(LeanTweenType.easeOutQuad).id;
     }
 
     public void ZoomToVisiblePings()
     {
         // Zooms camera to encompass all visible pings
+        furthestPing_ = null;
+        foreach (Ping ping in allPings)
+        {
+            if (ping.state_ == PING_STATES.PINGED)
+            {
+                if (!ping.GetComponentInChildren<RectTransform>().IsVisibleFrom(worldMapCamera))
+                {
+                    furthestPing_ = ping;
+                }
+            };
+        }
+        if (furthestPing_ != null)
+        {
+            float currentCameraZoom = worldMapCamera.orthographicSize;
+            LeanTweenId_ = LeanTween.value(worldMapCamera.gameObject, CanSeePoint, currentCameraZoom, 25f, 4f).setEase(LeanTweenType.easeOutQuad).id;
+        }
+        else
+        {
+            //Add a little extra
+            float currentCameraZoom = worldMapCamera.orthographicSize;
+            float targetZoom = currentCameraZoom * 1.25f;
+            LeanTween.value(worldMapCamera.gameObject, SetCameraZoom, currentCameraZoom, targetZoom, .5f).setEase(LeanTweenType.easeOutQuad);
+        }
+    }
+
+    public void SetCameraZoom(float value)
+    {
+        worldMapCamera.orthographicSize = value;
+    }
+
+    public void CanSeePoint(float newSize)
+    {
+        if (furthestPing_ != null)
+        {
+            if (!furthestPing_.GetComponentInChildren<RectTransform>().IsVisibleFrom(worldMapCamera))
+            {
+                //Debug.Log("Zooming!");
+                worldMapCamera.orthographicSize = newSize;
+            }
+            else
+            {
+                LeanTween.cancel(LeanTweenId_);
+                //Try again.
+                ZoomToVisiblePings();
+            }
+        }
+        else
+        {
+            worldMapCamera.orthographicSize = newSize;
+        }
     }
 
     public void ShowEncounterButton(bool show = true) {
@@ -178,4 +235,7 @@ public class WorldMapController : Object {
         FadeCanvas.color = new Color(0, 0, 0, newfade);
     }
 
+    
 }
+
+
