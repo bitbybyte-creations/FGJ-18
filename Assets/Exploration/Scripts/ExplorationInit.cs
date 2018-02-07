@@ -59,6 +59,8 @@ public class ExplorationInit : MonoBehaviour
         }
     }
 
+    Action onObjectiveReached; 
+
     public void Init()
     {
         
@@ -73,10 +75,15 @@ public class ExplorationInit : MonoBehaviour
         PlayerControls c = Synchronizer.Instance.Player.GetComponent<PlayerControls>();
         ReturnToWorldMap m = GetComponent<ReturnToWorldMap>();        
         c.OnPlayerMovedToEndEvent += m.FinishScene;
-        c.OnPlayerMovedToObjectiveEvent += delegate {            
-            Synchronizer.Instance.Player.Entity.Stats.Energy += UnityEngine.Random.Range(60, 100);            
+
+        onObjectiveReached = delegate {
+            Synchronizer.Instance.Player.Entity.Stats.Energy += UnityEngine.Random.Range(60, 100);
             WorldMapController.instance_.typeWriter.Write("This is what I'm looking for! It's time to leave... fast...", true, false);
+            c.OnPlayerMovedToObjectiveEvent -= onObjectiveReached;
+            
         };
+
+        c.OnPlayerMovedToObjectiveEvent += onObjectiveReached;
         Synchronizer.Instance.OnAllEnemiesDiedEvent += delegate
         {
             WorldMapController.instance_.typeWriter.Write("The sounds become silent as the last remaining creatures falls dead upon my feet. I think it's safe to leave now.");
