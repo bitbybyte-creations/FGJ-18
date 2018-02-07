@@ -86,7 +86,7 @@ public class ExplorationInit : MonoBehaviour
         c.OnPlayerMovedToObjectiveEvent += onObjectiveReached;
         Synchronizer.Instance.OnAllEnemiesDiedEvent += delegate
         {
-            WorldMapController.instance_.typeWriter.Write("The sounds become silent as the last remaining creatures falls dead upon my feet. I think it's safe to leave now.");
+            WorldMapController.instance_.typeWriter.Write("The sounds become silent as the last remaining creatures falls dead upon my feet. I think it's safe to leave now.", true, false);
             Synchronizer.Instance.Player.Entity.Stats.Energy += UnityEngine.Random.Range(40, 80);
             m.FinishScene();
         };
